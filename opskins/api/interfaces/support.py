@@ -10,9 +10,9 @@ from opskins.api import APIResponse
 class ISupport(OPSkins):
     """The ISupport interface of OPSkins"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing function"""
-        super().__init__()
+        super().__init__(*args, **kwargs)
 
     def repair_item(self, saleid):
         """RepairItem v1 implementation

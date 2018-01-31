@@ -9,9 +9,9 @@ from opskins.api import APIResponse
 class IStatus(OPSkins):
     """The IStatus interface of OPSkins"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing function"""
-        super().__init__()
+        super().__init__(*args, **kwargs)
 
     def get_bot_list(self):
         """GetBotList v1 implementation

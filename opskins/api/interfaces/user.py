@@ -9,9 +9,9 @@ from opskins.api import APIResponse
 class IUser(OPSkins):
     """The IUser interface of OPSkins"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing function"""
-        super().__init__()
+        super().__init__(*args, **kwargs)
 
     def get_balance(self):
         """GetBalance v1 implementation

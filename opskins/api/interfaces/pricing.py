@@ -11,9 +11,9 @@ from opskins.common import *
 class IPricing(OPSkins):
     """The IPricing interface of OPSkins"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing function"""
-        super().__init__()
+        super().__init__(*args, **kwargs)
 
     def get_price_list(self, app_id=CommonSteamGames.APP_ID_CSGO):
         """GetPriceList v2 implementation

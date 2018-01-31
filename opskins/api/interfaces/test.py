@@ -9,9 +9,9 @@ from opskins.api import APIResponse
 class ITest(OPSkins):
     """The ITest interface of OPSkins"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing function"""
-        super().__init__()
+        super().__init__(*args, **kwargs)
 
     def test(self):
         """Test v1 implementation

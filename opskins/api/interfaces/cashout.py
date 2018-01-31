@@ -11,9 +11,9 @@ from opskins.api.exceptions import *
 class ICashout(OPSkins):
     """The ICashout interface of OPSkins"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing function"""
-        super().__init__()
+        super().__init__(*args, **kwargs)
 
     def get_address(self, processor=Processor.PAYPAL):
         """GetAddress v1 implementation

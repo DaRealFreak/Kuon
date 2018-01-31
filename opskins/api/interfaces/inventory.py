@@ -13,9 +13,9 @@ from opskins.api.exceptions import *
 class IInventory(OPSkins):
     """The IInventory interface of OPSkins"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing function"""
-        super().__init__()
+        super().__init__(*args, **kwargs)
 
     def get_inventory(self, page=None, per_page=None):
         """GetInventory v2 implementation

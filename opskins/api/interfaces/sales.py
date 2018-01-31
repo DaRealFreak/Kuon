@@ -30,9 +30,9 @@ class ISales(OPSkins):
             The full market name of the item. For example: "AK-47 | Aquamarine Revenge (Field-Tested)"
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializing function"""
-        super().__init__()
+        super().__init__(*args, **kwargs)
 
     def get_sales(self, status_type=ItemStatus.AWAITING_PICKUP, app_id=None, after_saleid=None, page=None,
                   per_page=None, sort=None):
