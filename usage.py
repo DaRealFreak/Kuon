@@ -6,10 +6,22 @@
 from pprint import pprint
 
 from opskins.api.common import *
-from opskins.api.interfaces import ISales, IUser
+from opskins.api.interfaces import *
 from opskins.common import *
 
 if __name__ == '__main__':
+    inventory_interface = IInventory()
+    pprint(inventory_interface.withdraw(['123', '456']))
+
+    cashout_interface = ICashout()
+    pprint(cashout_interface.get_address(Processor.PAYPAL))
+
+    pricing_interface = IPricing()
+    pprint(pricing_interface.get_all_lowest_list_prices())
+
+    status_interface = IStatus()
+    pprint(status_interface.get_bot_list().response.bots)
+
     user_interface = IUser()
     pprint(user_interface.get_balance())
 
