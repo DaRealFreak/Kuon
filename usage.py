@@ -5,11 +5,13 @@
 
 from pprint import pprint
 
-from saucenao import run_application
+from opskins.api import ISales
+from opskins.api.common import *
+from opskins.common import *
 
 if __name__ == '__main__':
-    results = run_application()
-    # if argument move_to_categories is set we don't get a return type, else a generator object
-    if results:
-        for result in results:
-            pprint(result)
+    sales_interface = ISales()
+    pprint(sales_interface.get_sales(status_type=ItemStatus.SOLD_AND_DELIVERED, app_id=CommonSteamGames.APP_ID_CSGO))
+    pprint(sales_interface.get_last_sales(app_id=CommonSteamGames.APP_ID_CSGO, context_id=ContextIds.VALVE_GAMES,
+                                          market_name='AK-47 | Aquamarine Revenge (Field-Tested)'))
+    pprint(sales_interface.search(search_word="howl min", app_id=CommonSteamGames.APP_ID_CSGO))
