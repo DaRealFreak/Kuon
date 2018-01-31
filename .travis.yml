@@ -1,0 +1,24 @@
+language: python
+sudo: false
+
+python:
+  - "3.5"
+  - "3.6"
+  - "nightly"
+  # PyPy versions
+  - "pypy3"
+
+matrix:
+  allow_failures:
+    - python: nightly
+
+install:
+  - pip install .
+  - pip install nose-exclude
+  - pip install coveralls
+
+script:
+  - nosetests --with-coverage --cover-package=saucenao
+
+after_success:
+  - coveralls
