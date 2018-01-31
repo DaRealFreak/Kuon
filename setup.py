@@ -19,8 +19,8 @@ setup(name=about['__title__'],
       license=about['__license__'],
       packages=find_packages(),
       install_requires=[
-          'requests>=2.18.4'
-          'python-dotenv>=0.7.1',
+          'requests>=2.18.4', 'requests',
+          'python-dotenv>=0.7.1', 'python-dotenv'
       ],
       extras_require={
       },
