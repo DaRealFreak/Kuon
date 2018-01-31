@@ -9,7 +9,9 @@ from collections import MutableSequence
 
 
 class LockedList(MutableSequence):
-    """A container for manipulating lists of hosts"""
+    """Custom list where customizing values isn't possible by default
+    Return LockedList on list or tuple types
+    and LockedDict on dict types"""
 
     def __init__(self, data=None):
         """Initialize the class"""
@@ -50,10 +52,9 @@ class LockedList(MutableSequence):
 
 
 class LockedDict(dict):
-    """
-    Custom dict where customizing values isn't possible by default
+    """Custom dict where customizing values isn't possible by default
     Return LockedList on list or tuple types
-    """
+    and LockedDict on dict types"""
 
     def __init__(self, *args, **kwargs):
         super(LockedDict, self).__init__(*args, **kwargs)
@@ -89,10 +90,8 @@ class LockedDict(dict):
 
 
 class APIResponse(LockedDict):
-    """
-    Wrapper for the json response returned from the OPSkins API
-    Uses LockedDict and LockedList classes to prevent modifications to the retrieved values
-    """
+    """Wrapper for the json response returned from the OPSkins API
+    Uses LockedDict and LockedList classes to prevent modifications to the retrieved values"""
 
     def __init__(self, data):
         try:
