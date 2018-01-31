@@ -1,3 +1,6 @@
-from opskins.api.interfaces.sales import ISales
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-__all__ = [ISales]
+from opskins.api.api_response import APIResponse
+
+__all__ = [APIResponse]

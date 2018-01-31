@@ -5,7 +5,7 @@ import json
 
 import requests
 
-from opskins.api.api_response import APIResponse
+from opskins.api import APIResponse
 from opskins.api.common import *
 from opskins.api.exceptions import *
 from opskins.api.opskins import OPSkins
