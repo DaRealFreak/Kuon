@@ -21,3 +21,14 @@ class Sorting:
     BOT = 'bot'
     ACTIVITY_OLD = 'activity_old'
     ACTIVITY_NEW = 'activity_new'
+
+
+class Processor:
+    PAYPAL = 1
+    BITCOIN = 3
+    SKRILL = 5
+
+
+class Cashout:
+    REGULAR = 0
+    PRIORITY = 1
