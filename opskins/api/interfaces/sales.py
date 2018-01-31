@@ -50,7 +50,7 @@ class ISales(OPSkins):
         api_url = "https://api.opskins.com/ISales/GetSales/v1/"
 
         if not status_type:
-            raise MissingArgumentException('Search requires the argument "status_type"')
+            raise MissingArgumentException('The function get_sales requires the argument "status_type"')
 
         payload = {
             'type': status_type,
@@ -156,7 +156,7 @@ class ISales(OPSkins):
         api_url = "https://api.opskins.com/ISales/BumpItems/v1/"
 
         payload = {
-            "items": ",".join(items)
+            "items": ",".join([str(item) for item in items])
         }
 
         link = requests.post(url=api_url, data=payload, headers=self._headers)
@@ -172,7 +172,7 @@ class ISales(OPSkins):
         api_url = "https://api.opskins.com/ISales/ReturnItems/v1/"
 
         payload = {
-            "items": ",".join(items)
+            "items": ",".join([str(item) for item in items])
         }
 
         link = requests.post(url=api_url, data=payload, headers=self._headers)
@@ -208,7 +208,7 @@ class ISales(OPSkins):
         api_url = 'https://api.opskins.com/ISales/Search/v1/'
 
         if not app_id:
-            raise MissingArgumentException('Search requires the argument "app_id"')
+            raise MissingArgumentException('The function search requires the argument "app_id"')
 
         payload = {
             'app': OPSkins.app_id_to_search_id(app_id),
@@ -235,41 +235,37 @@ class ISales(OPSkins):
         api_url = "https://api.opskins.com/ISales/BuyItems/v1/"
 
         payload = {
-            "saleids": ",".join(saleids),
+            "saleids": ",".join([str(saleid) for saleid in saleids]),
             "total": str(total)
         }
 
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def get_last_sales(self, app_id=CommonSteamGames.APP_ID_CSGO, context_id=ContextIds.VALVE_GAMES, market_name=None,
+    def get_last_sales(self, market_name: str, app_id=CommonSteamGames.APP_ID_CSGO, context_id=ContextIds.VALVE_GAMES,
                        val_1=None):
         """GetLastSales v1 implementation
         https://opskins.com/kb/api-isales#method-getlastsales-v1
 
+        :param market_name:
         :param app_id:
         :param context_id:
-        :param market_name:
         :param val_1:
         :return:
         """
         api_url = 'https://api.opskins.com/ISales/GetLastSales/v1/'
 
         if not app_id:
-            raise MissingArgumentException('Search requires the argument "app_id"')
+            raise MissingArgumentException('The function get_last_sales requires the argument "app_id"')
         if not context_id:
-            raise MissingArgumentException('Search requires the argument "context_id"')
-        if not market_name:
-            raise MissingArgumentException('Search requires the argument "market_name"')
+            raise MissingArgumentException('The function get_last_sales requires the argument "context_id"')
 
         payload = {
-            'appid': app_id,
-            'contextid': context_id,
+            'appid': str(app_id),
+            'contextid': str(context_id),
             'market_name': market_name
         }
 
-        if market_name:
-            payload['market_name'] = market_name
         if val_1:
             payload['val_1'] = str(val_1)
 
