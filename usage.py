@@ -5,11 +5,14 @@
 
 from pprint import pprint
 
-from opskins.api import ISales
 from opskins.api.common import *
+from opskins.api.interfaces import ISales, IUser
 from opskins.common import *
 
 if __name__ == '__main__':
+    user_interface = IUser()
+    pprint(user_interface.get_balance())
+
     sales_interface = ISales()
     pprint(sales_interface.get_sales(status_type=ItemStatus.SOLD_AND_DELIVERED, app_id=CommonSteamGames.APP_ID_CSGO))
     pprint(sales_interface.get_last_sales(app_id=CommonSteamGames.APP_ID_CSGO, context_id=ContextIds.VALVE_GAMES,
