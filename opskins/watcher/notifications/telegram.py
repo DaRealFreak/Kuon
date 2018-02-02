@@ -26,8 +26,23 @@ class Telegram:
             raise InvalidApiSettingsException('You need an API token to use the Telegram API')
 
         self._token = settings.Notification.Telegram.token
-        self._chat_id = settings.Notification.Telegram.chat_id
         self.api_url = "https://api.telegram.org/bot{0:s}".format(self._token)
+
+        bot_profile = self.get_me()
+        if not bot_profile.ok:
+            raise InvalidApiSettingsException('The provided API key is invalid')
+
+        self._chat_id = settings.Notification.Telegram.chat_id
+
+    def get_me(self):
+        """getMe implementation
+        https://core.telegram.org/bots/api#getme
+
+        :return:
+        """
+        api_url = "{0:s}/getMe".format(self.api_url)
+        link = requests.get(api_url)
+        return APIResponse(link.text)
 
     def get_updates(self, offset=None, limit=None, timeout=None, allowed_updates=None):
         """getUpdates implementation
