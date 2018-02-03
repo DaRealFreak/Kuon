@@ -11,10 +11,11 @@ import dotenv
 import requests
 
 from opskins.api.exceptions import *
+from opskins.selenium_helper import SeleniumHelper
 
 
 class OPSkins(object):
-    _api_key = None
+    _selenium_helper = None
 
     def __init__(self, api_key=None, no_validate=True):
         """Initializing function
@@ -65,3 +66,13 @@ class OPSkins(object):
         :return:
         """
         return str(app_id) + "_2"
+
+    @property
+    def selenium_helper(self):
+        """Use property to make this lazy since it takes 3-4 seconds to load
+
+        :return:
+        """
+        if not self._selenium_helper:
+            self._selenium_helper = SeleniumHelper()
+        return self._selenium_helper

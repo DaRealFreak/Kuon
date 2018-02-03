@@ -20,7 +20,8 @@ setup(name=about['__title__'],
       packages=find_packages(),
       install_requires=[
           'requests>=2.18.4', 'requests',
-          'python-dotenv>=0.7.1', 'python-dotenv'
+          'python-dotenv>=0.7.1', 'python-dotenv',
+          'selenium'
       ],
       extras_require={
       },
