@@ -112,7 +112,7 @@ class Telegram:
         """
         updates = self.get_updates()
         if not updates.result:
-            # Bot didn't receive a single message yet
+            # Bot didn't receive any new messages
             return None, ""
 
         last_update = len(updates.result) - 1

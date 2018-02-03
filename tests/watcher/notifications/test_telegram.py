@@ -9,7 +9,6 @@ if __name__ == "__main__":
 
     telegram = Telegram(settings)
     text, chat = telegram.get_last_chat_id_and_text()
-    print(text, chat)
     res = telegram.send_message('<a href="https://imgur.com/a/Cdvt5">2B Nier Automata imgur album</a>',
                                 settings.Notification.Telegram.chat_id,
                                 parse_mode="HTML", disable_web_page_preview=True)
