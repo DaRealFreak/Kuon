@@ -8,6 +8,7 @@ import requests
 from opskins.api import APIResponse
 from opskins.api.common import *
 from opskins.api.exceptions import *
+from opskins.api.html_parser import HtmlToJsonParser
 from opskins.api.opskins import OPSkins
 from opskins.common import *
 
@@ -189,7 +190,7 @@ class ISales(OPSkins):
         link = requests.get(url=api_url, headers=self._headers)
         return APIResponse(link.text)
 
-    def search(self, app_id=CommonSteamGames.APP_ID_CSGO, search_word='', price_min=None, price_max=None):
+    def search(self, search_item='', app_id=CommonSteamGames.APP_ID_CSGO, price_min=None, price_max=None):
         """Search v1 implementation
         https://opskins.com/kb/api-isales#method-search-v1
 
@@ -199,8 +200,8 @@ class ISales(OPSkins):
         ten minutes, and are not currently limited to Buyers Club members.
         This endpoint always returns 100 listings sorted from lowest to highest price.
 
+        :param search_item:
         :param app_id:
-        :param search_word:
         :param price_min:
         :param price_max:
         :return:
@@ -214,8 +215,8 @@ class ISales(OPSkins):
             'app': OPSkins.app_id_to_search_id(app_id),
         }
 
-        if search_word:
-            payload['search_word'] = search_word
+        if search_item:
+            payload['search_item'] = search_item
         if price_min:
             payload['min'] = str(price_min)
         if price_max:
@@ -224,14 +225,14 @@ class ISales(OPSkins):
         link = requests.get(url=api_url, params=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def search_no_limit(self, app_id=CommonSteamGames.APP_ID_CSGO, search_word='', price_min=None, price_max=None):
+    def search_no_delay(self, search_item='', app_id=CommonSteamGames.APP_ID_CSGO, price_min=None, price_max=None):
         """Custom implementation of the Search v1 API option
 
         Since items don't appear within the first 10 minutes using the API
         this method is using a normal web request to retrieve the first 18 search results
 
+        :param search_item:
         :param app_id:
-        :param search_word:
         :param price_min:
         :param price_max:
         :return:
@@ -245,15 +246,15 @@ class ISales(OPSkins):
             "sort": "lh"
         }
 
-        if search_word:
-            payload['search_item'] = search_word
+        if search_item:
+            payload['search_item'] = search_item
         if price_min:
             payload['min'] = str(price_min)
         if price_max:
             payload['max'] = str(price_max)
 
         link = self.selenium_helper.get(url=url, params=payload)
-        return link.page_source
+        return APIResponse(HtmlToJsonParser.search_result(link.page_source))
 
     def buy_items(self, saleids: list, total):
         """BuyItems v1 implementation
