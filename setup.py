@@ -21,7 +21,9 @@ setup(name=about['__title__'],
       install_requires=[
           'requests>=2.18.4', 'requests',
           'python-dotenv>=0.7.1', 'python-dotenv',
-          'selenium'
+          'selenium>=3.8.1', 'selenium',
+          'bs4>=0.0.1', 'bs4',
+          'html5lib>=1.0.1', 'html5lib'
       ],
       extras_require={
       },
