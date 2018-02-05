@@ -11,6 +11,7 @@ from opskins.watcher.currency import Currency
 from opskins.watcher.notifications import Telegram
 from opskins.watcher.notifications.mail import Mail
 from opskins.watcher.settings import NotificationType
+from opskins.watcher.tracker import Tracker
 
 
 class Watcher(threading.Thread):
@@ -21,7 +22,7 @@ class Watcher(threading.Thread):
     _mail = None
     _telegram = None
 
-    def __init__(self, log_level=logging.INFO):
+    def __init__(self, log_level=logging.ERROR):
         """Initializing function
 
         :param log_level:
@@ -33,12 +34,13 @@ class Watcher(threading.Thread):
         self.logger = logging.getLogger("opskins_watcher")
 
         self.sales_interface = ISales()
+        self._item_tracker = Tracker()
         self.notified_ids = []
 
         self.validate_settings()
-        self.check_conditions()
+        self.run()
 
-    def check_conditions(self):
+    def run(self):
         """The main function, checking the tracked items in a while True loop
 
         :return:
@@ -46,15 +48,43 @@ class Watcher(threading.Thread):
         while True:
             start_time = time()
 
-            results = self.sales_interface.search("m4 howl min")
-            for search_item in results.response.sales:
-                # self.notify_user(item=search_item)
-                continue
+            for tracked_item in self._item_tracker.tracked_items:
+                results = self.sales_interface.search(tracked_item.search_word)
+                for search_item in results.response.sales:
+
+                    if search_item.id in self.notified_ids:
+                        # if we reach the part where we already notified the user
+                        # we can break the loop
+                        self.logger.debug("already notified user about item: {item}".format(item=search_item.id))
+                        break
+
+                    if self.is_condition_matching(item=search_item, condition=tracked_item):
+                        # condition matches and user didn't get notified yet
+                        self.logger.info("conditions ({conditions}) met for item: {item}".format(
+                            conditions=tracked_item, item=search_item.id))
+                        self.notify_user(item=search_item)
+
+                    else:
+                        # Currently only price conditions are implemented so we can break if the condition is not met
+                        # since the default sorting is ascending by price
+                        self.logger.info("conditions ({conditions}) not met for item: {item}".format(
+                            conditions=tracked_item, item=search_item.id))
+                        break
 
             duration = time() - start_time
             if duration < Settings.check_frequency:
                 self.logger.info("sleeping '{:.2f}' seconds".format(Settings.check_frequency - duration))
                 sleep(Settings.check_frequency - duration)
+
+    def is_condition_matching(self, item: LockedDict, condition: LockedDict):
+        """Check if the set condition matches on the passed item
+
+        :param item:
+        :param condition:
+        :return:
+        """
+        # ToDo: implement
+        return False
 
     def notify_user(self, item: LockedDict):
         """Notifying the user with the selected option
