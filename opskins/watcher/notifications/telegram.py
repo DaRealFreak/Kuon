@@ -17,22 +17,19 @@ class Telegram:
     The telegram API documentation can be found here: https://core.telegram.org/bots/api
     """
 
-    def __init__(self, settings: Settings):
-        """Initializing function
-
-        :param settings:
-        """
-        if not settings.Notification.Telegram.token:
+    def __init__(self):
+        """Initializing function"""
+        if not Settings.Notification.Telegram.token:
             raise InvalidApiSettingsException('You need an API token to use the Telegram API')
 
-        self._token = settings.Notification.Telegram.token
+        self._token = Settings.Notification.Telegram.token
         self.api_url = "https://api.telegram.org/bot{0:s}".format(self._token)
 
         bot_profile = self.get_me()
         if not bot_profile.ok:
             raise InvalidApiSettingsException('The provided API key is invalid')
 
-        self._chat_id = settings.Notification.Telegram.chat_id
+        self._chat_id = Settings.Notification.Telegram.chat_id
 
     def get_me(self):
         """getMe implementation

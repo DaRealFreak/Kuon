@@ -43,14 +43,14 @@ class Settings:
             else:
                 smtp_port = 587
 
-    def __init__(self):
-        """Initializing function"""
-        if os.environ.get('CHECK_FREQUENCY') and os.environ.get('CHECK_FREQUENCY').isnumeric():
-            self._check_frequency = int(os.environ.get('CHECK_FREQUENCY'))
-        else:
-            self._check_frequency = 20
+    LIMIT_60_SECONDS = 20
 
-        if os.environ.get('NOTIFICATION_TYPE') and os.environ.get('NOTIFICATION_TYPE').isnumeric():
-            self._notification_type = int(os.environ.get('NOTIFICATION_TYPE'))
-        else:
-            self._notification_type = NotificationType.Nothing
+    if os.environ.get('CHECK_FREQUENCY') and os.environ.get('CHECK_FREQUENCY').isnumeric():
+        check_frequency = int(os.environ.get('CHECK_FREQUENCY'))
+    else:
+        check_frequency = 20
+
+    if os.environ.get('NOTIFICATION_TYPE') and os.environ.get('NOTIFICATION_TYPE').isnumeric():
+        notification_type = int(os.environ.get('NOTIFICATION_TYPE'))
+    else:
+        notification_type = NotificationType.Nothing
