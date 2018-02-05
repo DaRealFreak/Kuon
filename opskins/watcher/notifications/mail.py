@@ -14,10 +14,12 @@ class InvalidMailSettingsException(Exception):
 
 
 class Mail:
-    def __init__(self):
-        """
+    """
+    Class to notify the user via mail.
+    """
 
-        """
+    def __init__(self):
+        """Initializing action. Validate SMTP connection and user settings"""
         self._smtp = SMTP(host=Settings.Notification.Mail.smtp_server, port=Settings.Notification.Mail.smtp_port)
         self._smtp.ehlo()
         self._smtp.starttls()
@@ -37,7 +39,7 @@ class Mail:
         self._smtp.close()
 
     def send_message(self, subject, text):
-        """
+        """Send a mail to the configured mail
 
         :param subject:
         :param text:
