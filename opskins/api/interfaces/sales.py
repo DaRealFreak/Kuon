@@ -225,16 +225,19 @@ class ISales(OPSkins):
         link = requests.get(url=api_url, params=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def search_no_delay(self, search_item='', app_id=CommonSteamGames.APP_ID_CSGO, price_min=None, price_max=None):
+    def search_no_delay(self, search_item='', app_id=CommonSteamGames.APP_ID_CSGO, price_min=None, price_max=None,
+                        sorting=FilterSorting.PRICE_ASC):
         """Custom implementation of the Search v1 API option
 
         Since items don't appear within the first 10 minutes using the API
         this method is using a normal web request to retrieve the first 18 search results
+        Adds an additional option to sort the results by default
 
         :param search_item:
         :param app_id:
         :param price_min:
         :param price_max:
+        :param sorting:
         :return:
         """
         url = "https://opskins.com/"
@@ -243,7 +246,7 @@ class ISales(OPSkins):
             "app": OPSkins.app_id_to_search_id(app_id),
             "loc": "shop_search",
             # low to high sorting
-            "sort": "lh"
+            "sort": sorting
         }
 
         if search_item:
