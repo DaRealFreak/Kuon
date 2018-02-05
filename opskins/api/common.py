@@ -11,6 +11,16 @@ class ItemStatus:
     RETURNED = 6
 
 
+class FilterSorting:
+    FEATURED = "f"
+    PRICE_ASC = "lh"
+    PRICE_DESC = "hl"
+    ACTIVITY_ASC = "n"
+    ACTIVITY_DESC = "o"
+    WEAR_ASC = "wlh"
+    WEAR_DESC = "whl"
+
+
 class Sorting:
     NEW = 'new'
     OLDEST_BUMP = 'oldest_bump'
