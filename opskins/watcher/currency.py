@@ -16,6 +16,13 @@ class Currency:
         self._currency_sign = currency_sign
         self._currency_sign_start = currency_sign_start
 
+    def __repr__(self):
+        """Return the readable format
+
+        :return:
+        """
+        return self.human_readable
+
     @property
     def human_readable(self):
         """Return the amount in a readable format like $15.00 instead of 1500
