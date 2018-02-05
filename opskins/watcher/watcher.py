@@ -49,7 +49,7 @@ class Watcher(threading.Thread):
             start_time = time()
 
             for tracked_item in self._item_tracker.tracked_items:
-                results = self.sales_interface.search(tracked_item.search_word)
+                results = self.sales_interface.search(search_item=tracked_item.search_item)
                 for search_item in results.response.sales:
 
                     if search_item.id in self.notified_ids:
