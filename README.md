@@ -15,7 +15,9 @@ Required:
 
 * [requests](https://github.com/requests/requests) - http library
 * [python-dotenv](https://github.com/theskumar/python-dotenv) - .env file loader used for loading the api key
-
+* [selenium](https://github.com/SeleniumHQ/selenium) - A browser automation framework and ecosystem
+* [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup) - html parser
+* [html5lib](https://github.com/html5lib/html5lib-python) - Standards-compliant library for parsing and serializing HTML documents
 
 ### Usage
 
