@@ -18,7 +18,7 @@ install:
   - pip install coveralls
 
 script:
-  - nosetests --with-coverage --cover-package=saucenao
+  - nosetests --with-coverage --cover-package=opskins
 
 after_success:
   - coveralls
