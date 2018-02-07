@@ -96,7 +96,9 @@ class HtmlToJsonParser:
         results = {
             'status': 1,
             'time': int(time()),
-            'response': []
+            'response': {
+                'sales': []
+            }
         }
 
         result_div = soup.select_one("div.col-lg-9")
@@ -123,7 +125,6 @@ class HtmlToJsonParser:
                 'bot_id': None,
             }
 
-            # noinspection PyTypeChecker
-            results['response'].append(res)
+            results['response']['sales'].append(res)
 
         return json.dumps(results)
