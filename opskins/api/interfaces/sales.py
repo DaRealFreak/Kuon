@@ -307,6 +307,22 @@ class ISales(OPSkins):
         link = requests.get(url=api_url, params=payload, headers=self._headers)
         return APIResponse(link.text)
 
+    def get_last_sales_no_delay(self, market_name: str, app_id=CommonSteamGames.APP_ID_CSGO,
+                                context_id=ContextIds.VALVE_GAMES, val_1=None):
+        """Custom implementation of the GetLastSales v1 API option
+
+        Since the returned data from the API is sometimes about 1 week old
+        This method is using a normal web request to find the item and return the last 20 sales
+        in the format of the get_last_sales function
+
+        :param market_name:
+        :param app_id:
+        :param context_id:
+        :param val_1:
+        :return:
+        """
+        pass
+
     def get_sales_status(self):
         """GetSaleStatuses v1 implementation
         https://opskins.com/kb/api-isales#method-getsalestatuses-v1
