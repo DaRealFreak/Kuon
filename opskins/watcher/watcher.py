@@ -53,7 +53,7 @@ class Watcher(threading.Thread):
 
             for tracked_item in self._item_tracker.tracked_items:
                 track_index = self._item_tracker.tracked_items.index(tracked_item)
-                results = self.sales_interface.search(search_item=tracked_item.search_item)
+                results = self.sales_interface.search_no_delay(search_item=tracked_item.search_item)
 
                 for search_item in results.response.sales:
 
