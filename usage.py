@@ -70,9 +70,11 @@ def usage_sales_interface():
     :return:
     """
     sales_interface = ISales()
+
     pprint(sales_interface.get_sales(status_type=ItemStatus.SOLD_AND_DELIVERED, app_id=CommonSteamGames.APP_ID_CSGO))
     pprint(sales_interface.get_last_sales(app_id=CommonSteamGames.APP_ID_CSGO, context_id=ContextIds.VALVE_GAMES,
                                           market_name='AK-47 | Aquamarine Revenge (Field-Tested)'))
+    pprint(sales_interface.get_last_sales_no_delay(market_name='M4A4 | Howl (Factory New)'))
     pprint(sales_interface.search(search_item="howl min", app_id=CommonSteamGames.APP_ID_CSGO))
 
     # uses selenium chrome driver so initial call takes a few seconds to initialise the driver
