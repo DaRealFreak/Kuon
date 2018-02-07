@@ -3,6 +3,7 @@
 
 import json
 import re
+from datetime import datetime
 from time import time
 from urllib.parse import unquote
 
@@ -126,5 +127,61 @@ class HtmlToJsonParser:
             }
 
             results['response']['sales'].append(res)
+
+        return json.dumps(results)
+
+    @staticmethod
+    def _get_price_and_wear(sold_item: element.Tag):
+        """Extract the price and the wear values from the sold item tag
+        and format them into the used measurement unit of the API
+
+        :param sold_item:
+        :return:
+        """
+        info_tag_text = sold_item.find_next('span', attrs={'class': 'text-left'}).text
+        # currently max price $9.x m, don't think prices will ever go above 10m
+        price_and_wear = re.findall('^\$(\d{0,4},?\d{1,3}.\d{2}) \((\d+.\d+)%\)', info_tag_text)[0]
+        # price is returned in the smallest unit by the API but displayed in $ from the web
+        price = int(float(price_and_wear[0].replace(',', '')) * 100)
+        # wear is displayed in percentage, get in numerical format
+        wear = round(float(price_and_wear[1]) / 100, 5)
+        return price, wear
+
+    @staticmethod
+    def _get_timestamp(sold_item: element.Tag):
+        """Extract the sold date from the sold item tag
+        and return the timestamp of the date
+
+        :param sold_item:
+        :return:
+        """
+        date_text = sold_item.find_next('span', attrs={'class': 'pull-right'}).text
+        return int(datetime.strptime(date_text, "%b %d, %Y").timestamp())
+
+    @staticmethod
+    def last_sold(html):
+        """
+
+        :param html:
+        :return:
+        """
+        results = {
+            'response': [],
+            'status': 1,
+            'time': int(time())
+        }
+
+        soup = Soup(html, "html5lib")
+        sales = soup.select('.last20 .list-group-item')
+        for sold_item in sales:  # type: element.Tag
+            price, wear = HtmlToJsonParser._get_price_and_wear(sold_item)
+
+            # noinspection PyTypeChecker
+            results['response'].append({
+                'amount': price,
+                'id': 0,
+                'timestamp': HtmlToJsonParser._get_timestamp(sold_item),
+                'wear': wear
+            })
 
         return json.dumps(results)
