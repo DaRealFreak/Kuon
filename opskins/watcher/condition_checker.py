@@ -3,7 +3,7 @@
 
 from opskins.api.api_response import LockedDict
 from opskins.api.interfaces import ISales, IPricing
-from opskins.common import CommonSteamGames, ContextIds
+from opskins.common import CommonSteamGames
 from opskins.watcher.tracker import TrackConditions
 
 
@@ -43,10 +43,10 @@ class ConditionChecker:
         :param settings:
         :return:
         """
-        last_sold = self.sales_interface.get_last_sales(app_id=CommonSteamGames.APP_ID_CSGO,
-                                                        context_id=ContextIds.VALVE_GAMES,
-                                                        market_name=item.market_name)
-
+        last_sold = self.sales_interface.get_last_sales_no_delay(
+            app_id=CommonSteamGames.APP_ID_CSGO,
+            market_name='"{market_name}"'.format(market_name=item.market_name)
+        )
         average_price = sum([sold_item.amount for sold_item in last_sold.response]) / len(last_sold.response)
 
         if settings.unit == "%":
@@ -62,9 +62,10 @@ class ConditionChecker:
         :param settings:
         :return:
         """
-        last_sold = self.sales_interface.get_last_sales(app_id=CommonSteamGames.APP_ID_CSGO,
-                                                        context_id=ContextIds.VALVE_GAMES,
-                                                        market_name=item.market_name)
+        last_sold = self.sales_interface.get_last_sales_no_delay(
+            app_id=CommonSteamGames.APP_ID_CSGO,
+            market_name='"{market_name}"'.format(market_name=item.market_name)
+        )
         lowest_price = min([sold_item.amount for sold_item in last_sold.response])
 
         if settings.unit == "%":
