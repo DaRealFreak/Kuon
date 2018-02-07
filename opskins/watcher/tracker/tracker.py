@@ -8,9 +8,8 @@ from opskins.watcher.tracker.json_manager import JsonManager
 
 class TrackConditions:
     BELOW_VALUE = 0
-    BELOW_AVERAGE = 1
+    BELOW_AVERAGE_LAST_SOLD = 1
     BELOW_CHEAPEST_LAST_SOLD = 2
-    ALL_TIME_LOW = 3
 
 
 class Tracker:
