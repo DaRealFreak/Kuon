@@ -38,7 +38,7 @@ class Watcher(threading.Thread):
         self.sales_interface = ISales(*args, **kwargs)
         self._item_tracker = Tracker()
         self.condition_checker = ConditionChecker(*args, **kwargs)
-        self.notified_ids = []
+        self.checked_ids = []
 
         self.validate_settings()
         self.run()
@@ -57,7 +57,7 @@ class Watcher(threading.Thread):
 
                 for search_item in results.response.sales:
 
-                    if (track_index, search_item.id) in self.notified_ids:
+                    if (track_index, search_item.id) in self.checked_ids:
                         # if we reach the part where we already notified the user
                         # we can break the loop
                         self.logger.debug("already notified user about item: {item}".format(item=search_item.id))
@@ -65,16 +65,19 @@ class Watcher(threading.Thread):
 
                     if self.condition_checker.check_condition(item=search_item, settings=tracked_item):
                         # condition matches and user didn't get notified yet
-                        self.logger.info("conditions ({conditions}) met for item: {item}".format(
-                            conditions=tracked_item, item=search_item.id))
+                        self.logger.info("conditions ({cond}) met for item: {item}(${price:.2f})({id})".format(
+                            cond=tracked_item, item=search_item.market_name, price=search_item.amount / 100,
+                            id=search_item.id))
                         self.notify_user(item=search_item)
-                        self.notified_ids.append((track_index, search_item.id))
+                        self.checked_ids.append((track_index, search_item.id))
 
                     else:
                         # Currently only price conditions are implemented so we can break if the condition is not met
                         # since the default sorting is ascending by price
-                        self.logger.info("conditions ({conditions}) not met for item: {item}".format(
-                            conditions=tracked_item, item=search_item.id))
+                        self.logger.info("conditions ({cond}) not met for item: {item}(${price:.2f})({id})".format(
+                            cond=tracked_item, item=search_item.market_name, price=search_item.amount / 100,
+                            id=search_item.id))
+                        self.checked_ids.append((track_index, search_item.id))
                         break
 
             duration = time() - start_time
@@ -88,7 +91,7 @@ class Watcher(threading.Thread):
         :param item:
         :return:
         """
-        if item.id in self.notified_ids:
+        if item.id in self.checked_ids:
             return False
 
         item_link = "https://opskins.com/?loc=shop_view_item&item={0:d}".format(item.id)
