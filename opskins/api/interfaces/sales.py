@@ -308,7 +308,7 @@ class ISales(OPSkins):
         return APIResponse(link.text)
 
     def get_last_sales_no_delay(self, market_name: str, app_id=CommonSteamGames.APP_ID_CSGO,
-                                context_id=ContextIds.VALVE_GAMES, val_1=None):
+                                context_id=None, val_1=None):
         """Custom implementation of the GetLastSales v1 API option
 
         Since the returned data from the API is sometimes about 1 week old
@@ -321,7 +321,23 @@ class ISales(OPSkins):
         :param val_1:
         :return:
         """
-        pass
+        if context_id or val_1:
+            raise NotImplementedError('The OPSkins web view doesn\'t allow filtering for context_id or val_1')
+
+        # we can freely use the API method here we just need to get one item id with the same market name
+        listed_items = self.search(search_item=market_name, app_id=app_id)
+        item_id = listed_items.response.sales[0].id
+
+        url = "https://opskins.com/"
+
+        payload = {
+            "loc": "shop_view_item",
+            # low to high sorting
+            "item": item_id
+        }
+
+        link = self.selenium_helper.get(url=url, params=payload)
+        return APIResponse(HtmlToJsonParser.last_sold(link.page_source))
 
     def get_sales_status(self):
         """GetSaleStatuses v1 implementation
