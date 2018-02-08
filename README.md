@@ -15,7 +15,7 @@ Download this repository and run the setup.py to install all necessary dependenc
 ### Dependencies
 
 
-Requiredc:
+Required:
 
 * [requests](https://github.com/requests/requests) - http library
 * [python-dotenv](https://github.com/theskumar/python-dotenv) - .env file loader used for loading the api key
