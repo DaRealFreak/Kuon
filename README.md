@@ -1,5 +1,9 @@
 # OPSkins Bot
 
+[![Build Status](https://travis-ci.org/DaRealFreak/OPSkins.svg?branch=master)](https://travis-ci.org/DaRealFreak/OPSkins)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaRealFreak/OPSkins/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaRealFreak/OPSkins/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/DaRealFreak/OPSkins/badge.svg?branch=master)](https://coveralls.io/github/DaRealFreak/OPSkins?branch=master)
+
 bot to track prices on [OPSkins](https://opskins.com) and notify the user
 
 
@@ -11,7 +15,7 @@ Download this repository and run the setup.py to install all necessary dependenc
 ### Dependencies
 
 
-Required:
+Requiredc:
 
 * [requests](https://github.com/requests/requests) - http library
 * [python-dotenv](https://github.com/theskumar/python-dotenv) - .env file loader used for loading the api key
