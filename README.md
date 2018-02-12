@@ -22,6 +22,7 @@ Required:
 * [selenium](https://github.com/SeleniumHQ/selenium) - A browser automation framework and ecosystem
 * [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup) - html parser
 * [html5lib](https://github.com/html5lib/html5lib-python) - Standards-compliant library for parsing and serializing HTML documents
+* [pyotp](https://github.com/pyotp/pyotp) - Python One-Time Password Library
 
 ### Usage
 
