@@ -19,11 +19,12 @@ setup(name=about['__title__'],
       license=about['__license__'],
       packages=find_packages(),
       install_requires=[
-          'requests>=2.18.4', 'requests',
-          'python-dotenv>=0.7.1', 'python-dotenv',
-          'selenium>=3.8.1', 'selenium',
-          'bs4>=0.0.1', 'bs4',
-          'html5lib>=1.0.1', 'html5lib'
+          'requests>=2.18.4',
+          'python-dotenv>=0.7.1',
+          'selenium>=3.8.1',
+          'bs4>=0.0.1',
+          'html5lib>=1.0.1',
+          'pyotp>=2.2.6'
       ],
       extras_require={
       },
