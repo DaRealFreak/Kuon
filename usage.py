@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 #
 # This is an example usage
+
 import logging
 from pprint import pprint
 
-from opskins.api.common import *
-from opskins.api.interfaces import *
-from opskins.common import *
-from opskins.watcher import Watcher
+from kuon.opskins.api.interfaces import *
+from kuon.common import *
+from kuon.opskins.common import *
+from kuon.watcher import Watcher
 
 
 def usage_watcher():

@@ -1,5 +1,5 @@
 [run]
-source = opskins
+source = kuon
 
 [report]
 exclude_lines =

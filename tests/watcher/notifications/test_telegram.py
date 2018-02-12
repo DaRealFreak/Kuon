@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from opskins.watcher import Settings
-from opskins.watcher.notifications import Telegram
+
+from kuon.watcher import Settings
+from kuon.watcher.notifications import Telegram
 
 if __name__ == "__main__":
     telegram = Telegram()

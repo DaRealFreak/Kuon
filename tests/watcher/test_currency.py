@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 import unittest
 
-from opskins.watcher.currency import Currency
+from kuon.watcher.currency import Currency
 
 
 class TestCurrency(unittest.TestCase):

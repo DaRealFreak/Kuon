@@ -1,10 +1,10 @@
-# OPSkins Bot
+# Kuon
 
-[![Build Status](https://travis-ci.org/DaRealFreak/OPSkins.svg?branch=master)](https://travis-ci.org/DaRealFreak/OPSkins)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaRealFreak/OPSkins/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaRealFreak/OPSkins/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/DaRealFreak/OPSkins/badge.svg?branch=master)](https://coveralls.io/github/DaRealFreak/OPSkins?branch=master)
+[![Build Status](https://travis-ci.org/DaRealFreak/Kuon.svg?branch=master)](https://travis-ci.org/DaRealFreak/Kuon)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaRealFreak/Kuon/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaRealFreak/Kuon/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/DaRealFreak/Kuon/badge.svg?branch=master)](https://coveralls.io/github/DaRealFreak/Kuon?branch=master)
 
-bot to track prices on [OPSkins](https://opskins.com) and notify the user
+bot to track prices on [OPSkins](https://opskins.com) and [Bitskins](https://bitskins.com) and notify the user if search conditions are met
 
 
 ### Installing

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from opskins.watcher.notifications.mail import Mail
+
+from kuon.watcher.notifications.mail import Mail
 
 if __name__ == "__main__":
     mail = Mail()

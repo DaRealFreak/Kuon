@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from opskins.watcher.tracker import TrackConditions
-from opskins.watcher.tracker.json_manager import JsonManager
+from kuon.watcher.tracker import TrackConditions
+from kuon.watcher.tracker.json_manager import JsonManager
 
 if __name__ == '__main__':
     example_items = [
