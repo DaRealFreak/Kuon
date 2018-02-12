@@ -89,7 +89,7 @@ class LockedDict(dict):
 
 
 class APIResponse(LockedDict):
-    """Wrapper for the json response returned from the OPSkins API
+    """Wrapper for the json response returned from the APIs of OPSkins and Bitskins
     Uses LockedDict and LockedList classes to prevent modifications to the retrieved values"""
 
     def __init__(self, data):
