@@ -6,82 +6,107 @@
 import logging
 from pprint import pprint
 
-from kuon.opskins.api.interfaces import *
+import kuon.bitskins.api.interfaces as bitskins_interfaces
+import kuon.opskins.api.interfaces as opskins_interfaces
+import kuon.opskins.common as opskins_common
 from kuon.common import *
-from kuon.opskins.common import *
 from kuon.watcher import Watcher
 
 
-def usage_watcher():
-    """Example watcher usage
+class UsageWatcher:
+    """Example usage for the watcher class of Kuon"""
 
-    :return:
-    """
-    Watcher(log_level=logging.INFO)
+    @staticmethod
+    def watcher():
+        """Example watcher usage
 
-
-def usage_inventory_interface():
-    """Example inventory interface usage
-
-    :return:
-    """
-    inventory_interface = IInventory()
-    pprint(inventory_interface.withdraw(['123', '456']))
+        :return:
+        """
+        Watcher(log_level=logging.INFO)
 
 
-def usage_cashout_interface():
-    """Example cashout interface usage
+class UsageBitSkins:
+    """Example usages for the implementation of the BitSkins API"""
 
-    :return:
-    """
-    cashout_interface = ICashout()
-    pprint(cashout_interface.get_address(Processor.PAYPAL))
+    @staticmethod
+    def sales_interface():
+        """Example sales interface usage
 
+        :return:
+        """
+        sales_interface = bitskins_interfaces.ISales()
 
-def usage_pricing_interface():
-    """Example pricing interface usage
-
-    :return:
-    """
-    pricing_interface = IPricing()
-    pprint(pricing_interface.get_all_lowest_list_prices())
+        pprint(sales_interface.get_sales_info(market_hash_name="M4A4 | Howl (Factory New)"))
 
 
-def usage_status_interface():
-    """Example status interface usage
+class UsageOPSkins:
+    """Example usages for the implementation of the OPSkins API"""
 
-    :return:
-    """
-    status_interface = IStatus()
-    pprint(status_interface.get_bot_list().response.bots)
+    @staticmethod
+    def inventory_interface():
+        """Example inventory interface usage
 
+        :return:
+        """
+        inventory_interface = opskins_interfaces.IInventory()
+        pprint(inventory_interface.withdraw(['123', '456']))
 
-def usage_user_interface():
-    """Example user interface usage
+    @staticmethod
+    def cashout_interface():
+        """Example cashout interface usage
 
-    :return:
-    """
-    user_interface = IUser()
-    pprint(user_interface.get_balance())
+        :return:
+        """
+        cashout_interface = opskins_interfaces.ICashout()
+        pprint(cashout_interface.get_address(opskins_common.Processor.PAYPAL))
 
+    @staticmethod
+    def pricing_interface():
+        """Example pricing interface usage
 
-def usage_sales_interface():
-    """Example sales interface usage
+        :return:
+        """
+        pricing_interface = opskins_interfaces.IPricing()
+        pprint(pricing_interface.get_all_lowest_list_prices())
 
-    :return:
-    """
-    sales_interface = ISales()
+    @staticmethod
+    def status_interface():
+        """Example status interface usage
 
-    pprint(sales_interface.get_sales(status_type=ItemStatus.SOLD_AND_DELIVERED, app_id=CommonSteamGames.APP_ID_CSGO))
-    pprint(sales_interface.get_last_sales(app_id=CommonSteamGames.APP_ID_CSGO, context_id=ContextIds.VALVE_GAMES,
-                                          market_name='AK-47 | Aquamarine Revenge (Field-Tested)'))
-    pprint(sales_interface.get_last_sales_no_delay(market_name='M4A4 | Howl (Factory New)'))
-    pprint(sales_interface.search(search_item="howl min", app_id=CommonSteamGames.APP_ID_CSGO))
+        :return:
+        """
+        status_interface = opskins_interfaces.IStatus()
+        pprint(status_interface.get_bot_list().response.bots)
 
-    # uses selenium chrome driver so initial call takes a few seconds to initialise the driver
-    # on second use and later it will take way less time
-    pprint(sales_interface.search_no_delay(search_item="howl min", app_id=CommonSteamGames.APP_ID_CSGO))
+    @staticmethod
+    def user_interface():
+        """Example user interface usage
+
+        :return:
+        """
+        user_interface = opskins_interfaces.IUser()
+        pprint(user_interface.get_balance())
+
+    @staticmethod
+    def sales_interface():
+        """Example sales interface usage
+
+        :return:
+        """
+        sales_interface = opskins_interfaces.ISales()
+
+        pprint(sales_interface.get_sales(status_type=opskins_common.ItemStatus.SOLD_AND_DELIVERED,
+                                         app_id=CommonSteamGames.APP_ID_CSGO))
+        pprint(sales_interface.get_last_sales(app_id=CommonSteamGames.APP_ID_CSGO, context_id=ContextIds.VALVE_GAMES,
+                                              market_name='AK-47 | Aquamarine Revenge (Field-Tested)'))
+        pprint(sales_interface.get_last_sales_no_delay(market_name='M4A4 | Howl (Factory New)'))
+        pprint(sales_interface.search(search_item="howl min", app_id=CommonSteamGames.APP_ID_CSGO))
+
+        # uses selenium chrome driver so initial call takes a few seconds to initialise the driver
+        # on second use and later it will take way less time
+        pprint(sales_interface.search_no_delay(search_item="howl min", app_id=CommonSteamGames.APP_ID_CSGO))
 
 
 if __name__ == '__main__':
-    usage_watcher()
+    # UsageWatcher.watcher()
+    UsageBitSkins.sales_interface()
