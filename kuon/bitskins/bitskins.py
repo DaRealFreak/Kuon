@@ -45,19 +45,34 @@ class BitSkins(object):
         self._pyotp = pyotp.TOTP(self._secret)
         self.validate_api_key()
 
+    def api_request(self, api_url, params=None, headers=None):
+        """Insert API key and OTP code to the payload and return the parsed response
+
+        :param api_url:
+        :param params:
+        :param headers:
+        :return:
+        """
+        if headers is None:
+            headers = {}
+        if params is None:
+            params = {}
+
+        params['api_key'] = self._api_key
+        params['code'] = self.secret
+
+        link = requests.get(url=api_url, params=params, headers=headers)
+
+        return APIResponse(link.text)
+
     def validate_api_key(self):
         """Validate the api key and the 2 FA secret
 
         :return:
         """
         api_url = "https://bitskins.com/api/v1/get_account_balance/"
-        payload = {
-            'api_key': self._api_key,
-            'code': self.secret
-        }
-        link = requests.get(url=api_url, params=payload)
+        response = self.api_request(api_url=api_url)
 
-        response = APIResponse(link.text)
         if response.status != "success":
             raise InvalidOrWrongApiKeyException('Please provide a valid API key and 2 FA secret')
 
