@@ -38,6 +38,16 @@ class UsageBitSkins:
 
         pprint(sales_interface.get_sales_info(market_hash_name="M4A4 | Howl (Factory New)"))
 
+    @staticmethod
+    def pricing_interface():
+        """Example pricing interface usage
+
+        :return:
+        """
+        pricing_interface = bitskins_interfaces.IPricing()
+        pprint(pricing_interface.get_all_item_prices())
+        pprint(pricing_interface.get_price_data_for_items_on_sale())
+
 
 class UsageOPSkins:
     """Example usages for the implementation of the OPSkins API"""
@@ -108,5 +118,4 @@ class UsageOPSkins:
 
 
 if __name__ == '__main__':
-    # UsageWatcher.watcher()
-    UsageBitSkins.sales_interface()
+    UsageWatcher.watcher()
