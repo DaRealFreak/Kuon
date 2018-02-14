@@ -58,31 +58,18 @@ class IInventory(BitSkins):
         :param per_page:
         :return:
         """
+        arguments = locals()
         api_url = "https://bitskins.com/api/v1/get_inventory_on_sale/"
 
         payload = {
             'app_id': str(app_id)
         }
 
-        if page:
-            payload['page'] = int(page)
-        if sort_by:
-            payload['sort_by'] = sort_by
-        if order:
-            payload['order'] = order
-        if market_hash_name:
-            payload['market_hash_name'] = market_hash_name
-        if min_price:
-            payload['min_price'] = float(min_price)
-        if max_price:
-            payload['max_price'] = float(max_price)
-        if has_stickers:
-            payload['has_stickers'] = int(has_stickers)
-        if is_stattrak:
-            payload['is_stattrak'] = int(is_stattrak)
-        if is_souvenir:
-            payload['is_souvenir'] = int(is_souvenir)
-        if per_page:
-            payload['per_page'] = int(per_page)
+        for argument in arguments:
+            if argument == 'self':
+                continue
+
+            if arguments[argument] is not None:
+                payload[argument] = arguments[argument]
 
         return self.api_request(api_url=api_url, params=payload)
