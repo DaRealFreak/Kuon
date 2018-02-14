@@ -48,6 +48,15 @@ class UsageBitSkins:
         pprint(pricing_interface.get_all_item_prices())
         pprint(pricing_interface.get_price_data_for_items_on_sale())
 
+    @staticmethod
+    def inventory_interface():
+        """Example pricing interface usage
+
+        :return:
+        """
+        inventory_interface = bitskins_interfaces.IInventory()
+        pprint(inventory_interface.get_inventory_on_sale())
+
 
 class UsageOPSkins:
     """Example usages for the implementation of the OPSkins API"""
