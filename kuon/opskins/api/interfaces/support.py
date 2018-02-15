@@ -13,7 +13,7 @@ class ISupport(OPSkins):
         """Initializing function"""
         super().__init__(*args, **kwargs)
 
-    def repair_item(self, saleid):
+    def repair_item(self, saleid) -> APIResponse:
         """RepairItem v1 implementation
         https://opskins.com/kb/api-isupport#method-repairitem-v1
 

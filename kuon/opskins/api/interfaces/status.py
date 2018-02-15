@@ -13,7 +13,7 @@ class IStatus(OPSkins):
         """Initializing function"""
         super().__init__(*args, **kwargs)
 
-    def get_bot_list(self):
+    def get_bot_list(self) -> APIResponse:
         """GetBotList v1 implementation
         https://opskins.com/kb/api-istatus#method-getbotlist-v1
 

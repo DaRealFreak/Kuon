@@ -13,7 +13,7 @@ class ITest(OPSkins):
         """Initializing function"""
         super().__init__(*args, **kwargs)
 
-    def test(self):
+    def test(self) -> APIResponse:
         """Test v1 implementation
         https://api.opskins.com/ITest/Test/v1/
 
@@ -24,7 +24,7 @@ class ITest(OPSkins):
         link = requests.get(url=api_url, headers=self._headers)
         return APIResponse(link.text)
 
-    def test_authenticated(self):
+    def test_authenticated(self) -> APIResponse:
         """TestAuthed v1 implementation
         https://opskins.com/kb/api-itest#method-testauthed-v1
 

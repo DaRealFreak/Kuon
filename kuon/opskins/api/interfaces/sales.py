@@ -35,7 +35,7 @@ class ISales(OPSkins):
         super().__init__(*args, **kwargs)
 
     def get_sales(self, status_type=ItemStatus.AWAITING_PICKUP, app_id=None, after_saleid=None, page=None,
-                  per_page=None, sort=None):
+                  per_page=None, sort=None) -> APIResponse:
         """GetSales v1 implementation
         https://opskins.com/kb/api-isales#method-getsales-v1
 
@@ -70,7 +70,7 @@ class ISales(OPSkins):
         link = requests.get(url=api_url, params=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def get_listing_limit(self):
+    def get_listing_limit(self) -> APIResponse:
         """GetListingLimit v1 implementation
         https://opskins.com/kb/api-isales#method-getlistinglimit-v1
 
@@ -81,7 +81,7 @@ class ISales(OPSkins):
         link = requests.get(url=api_url, headers=self._headers)
         return APIResponse(link.text)
 
-    def list_items(self, items: list):
+    def list_items(self, items: list) -> APIResponse:
         """ListItems v1 implementation
         https://opskins.com/kb/api-isales#method-listitems-v1
 
@@ -104,7 +104,7 @@ class ISales(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def edit_price(self, saleid, price: int):
+    def edit_price(self, saleid, price: int) -> APIResponse:
         """EditPrice v1 implementation
         https://opskins.com/kb/api-isales#method-editprice-v1
 
@@ -122,7 +122,7 @@ class ISales(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def edit_price_multi(self, items: list):
+    def edit_price_multi(self, items: list) -> APIResponse:
         """EditPriceMulti v1 implementation
         https://opskins.com/kb/api-isales#method-editpricemulti-v1
 
@@ -146,7 +146,7 @@ class ISales(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def bump_items(self, items: list):
+    def bump_items(self, items: list) -> APIResponse:
         """BumpItems v1 implementation
         https://opskins.com/kb/api-isales#method-bumpitems-v1
 
@@ -162,7 +162,7 @@ class ISales(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def return_items(self, items: list):
+    def return_items(self, items: list) -> APIResponse:
         """ReturnItems v1 implementation
         https://opskins.com/kb/api-isales#method-returnitems-v1
 
@@ -178,7 +178,7 @@ class ISales(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def get_active_trade_offers(self):
+    def get_active_trade_offers(self) -> APIResponse:
         """GetActiveTradeOffers v1 implementation
         https://opskins.com/kb/api-isales#method-getactivetradeoffers-v1
 
@@ -189,7 +189,8 @@ class ISales(OPSkins):
         link = requests.get(url=api_url, headers=self._headers)
         return APIResponse(link.text)
 
-    def search(self, search_item='', app_id=CommonSteamGames.APP_ID_CSGO, price_min=None, price_max=None):
+    def search(self, search_item='', app_id=CommonSteamGames.APP_ID_CSGO, price_min=None,
+               price_max=None) -> APIResponse:
         """Search v1 implementation
         https://opskins.com/kb/api-isales#method-search-v1
 
@@ -225,7 +226,7 @@ class ISales(OPSkins):
         return APIResponse(link.text)
 
     def search_no_delay(self, search_item='', app_id=CommonSteamGames.APP_ID_CSGO, price_min=None, price_max=None,
-                        sorting=FilterSorting.PRICE_ASC):
+                        sorting=FilterSorting.PRICE_ASC) -> APIResponse:
         """Custom implementation of the Search v1 API option
 
         Since items don't appear within the first 10 minutes using the API
@@ -258,7 +259,7 @@ class ISales(OPSkins):
         link = self.selenium_helper.get(url=url, params=payload)
         return APIResponse(HtmlToJsonParser.search_result(link.page_source))
 
-    def buy_items(self, saleids: list, total):
+    def buy_items(self, saleids: list, total) -> APIResponse:
         """BuyItems v1 implementation
         https://opskins.com/kb/api-isales#method-buyitems-v1
 
@@ -277,7 +278,7 @@ class ISales(OPSkins):
         return APIResponse(link.text)
 
     def get_last_sales(self, market_name: str, app_id=CommonSteamGames.APP_ID_CSGO, context_id=ContextIds.VALVE_GAMES,
-                       val_1=None):
+                       val_1=None) -> APIResponse:
         """GetLastSales v1 implementation
         https://opskins.com/kb/api-isales#method-getlastsales-v1
 
@@ -307,7 +308,7 @@ class ISales(OPSkins):
         return APIResponse(link.text)
 
     def get_last_sales_no_delay(self, market_name: str, app_id=CommonSteamGames.APP_ID_CSGO,
-                                context_id=None, val_1=None):
+                                context_id=None, val_1=None) -> APIResponse:
         """Custom implementation of the GetLastSales v1 API option
 
         Since the returned data from the API is sometimes about 1 week old
@@ -338,7 +339,7 @@ class ISales(OPSkins):
         link = self.selenium_helper.get(url=url, params=payload)
         return APIResponse(HtmlToJsonParser.last_sold(link.page_source))
 
-    def get_sales_status(self):
+    def get_sales_status(self) -> APIResponse:
         """GetSaleStatuses v1 implementation
         https://opskins.com/kb/api-isales#method-getsalestatuses-v1
 

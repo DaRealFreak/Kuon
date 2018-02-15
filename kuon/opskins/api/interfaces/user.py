@@ -13,7 +13,7 @@ class IUser(OPSkins):
         """Initializing function"""
         super().__init__(*args, **kwargs)
 
-    def get_balance(self):
+    def get_balance(self) -> APIResponse:
         """GetBalance v1 implementation
         https://opskins.com/kb/api-iuser#method-getbalance-v1
 
@@ -24,7 +24,7 @@ class IUser(OPSkins):
         link = requests.get(url=api_url, headers=self._headers)
         return APIResponse(link.text)
 
-    def save_trade_url(self, trade_url: str):
+    def save_trade_url(self, trade_url: str) -> APIResponse:
         """SaveTradeURL v1 implementation
         https://opskins.com/kb/api-iuser#method-savetradeurl-v1
 

@@ -15,7 +15,7 @@ class IPricing(OPSkins):
         """Initializing function"""
         super().__init__(*args, **kwargs)
 
-    def get_price_list(self, app_id=CommonSteamGames.APP_ID_CSGO):
+    def get_price_list(self, app_id=CommonSteamGames.APP_ID_CSGO) -> APIResponse:
         """GetPriceList v2 implementation
         https://opskins.com/kb/api-ipricing#method-getpricelist-v2
 
@@ -36,7 +36,7 @@ class IPricing(OPSkins):
         link = requests.get(url=api_url, params=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def get_all_lowest_list_prices(self, app_id=CommonSteamGames.APP_ID_CSGO):
+    def get_all_lowest_list_prices(self, app_id=CommonSteamGames.APP_ID_CSGO) -> APIResponse:
         """GetAllLowestListPrices v1 implementation
         https://opskins.com/kb/api-ipricing#method-getalllowestlistprices-v1
 

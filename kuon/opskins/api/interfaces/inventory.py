@@ -7,7 +7,7 @@ import requests
 
 from kuon.opskins import APIResponse, OPSkins
 from kuon.opskins.api.exceptions import *
-from kuon.opskins.decorators import deprecated
+from kuon.decorators import deprecated
 
 
 class IInventory(OPSkins):
@@ -17,7 +17,7 @@ class IInventory(OPSkins):
         """Initializing function"""
         super().__init__(*args, **kwargs)
 
-    def get_inventory(self, page=None, per_page=None):
+    def get_inventory(self, page=None, per_page=None) -> APIResponse:
         """GetInventory v2 implementation
         https://opskins.com/kb/api-iinventory#method-getinventory-v2
 
@@ -38,7 +38,7 @@ class IInventory(OPSkins):
         return APIResponse(link.text)
 
     @deprecated
-    def get_inventory_v1(self):
+    def get_inventory_v1(self) -> APIResponse:
         """GetInventory v1 implementation
         https://opskins.com/kb/api-iinventory#method-getinventory-v1
 
@@ -49,7 +49,7 @@ class IInventory(OPSkins):
         link = requests.get(url=api_url, headers=self._headers)
         return APIResponse(link.text)
 
-    def withdraw(self, items: list):
+    def withdraw(self, items: list) -> APIResponse:
         """Withdraw v1 implementation
         https://opskins.com/kb/api-iinventory#method-withdraw-v1
 
@@ -65,7 +65,7 @@ class IInventory(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def deposit(self, items: list):
+    def deposit(self, items: list) -> APIResponse:
         """Deposit v1 implementation
         https://opskins.com/kb/api-iinventory#method-deposit-v1
 

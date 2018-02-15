@@ -15,7 +15,7 @@ class ICashout(OPSkins):
         """Initializing function"""
         super().__init__(*args, **kwargs)
 
-    def get_address(self, processor=Processor.PAYPAL):
+    def get_address(self, processor=Processor.PAYPAL) -> APIResponse:
         """GetAddress v1 implementation
         https://opskins.com/kb/api-icashout#method-getaddress-v1
 
@@ -34,7 +34,7 @@ class ICashout(OPSkins):
         link = requests.get(url=api_url, params=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def set_address(self, address: str, processor=Processor.PAYPAL, twofactor_code=None):
+    def set_address(self, address: str, processor=Processor.PAYPAL, twofactor_code=None) -> APIResponse:
         """SetAddress v1 implementation
         https://opskins.com/kb/api-icashout#method-setaddress-v1
 
@@ -61,7 +61,7 @@ class ICashout(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def get_pending_cashouts(self):
+    def get_pending_cashouts(self) -> APIResponse:
         """GetPendingCashouts v1 implementation
         https://opskins.com/kb/api-icashout#method-getpendingcashouts-v1
 
@@ -72,7 +72,7 @@ class ICashout(OPSkins):
         link = requests.get(url=api_url, headers=self._headers)
         return APIResponse(link.text)
 
-    def cancel_pending_cashout(self, cashout_id):
+    def cancel_pending_cashout(self, cashout_id) -> APIResponse:
         """CancelPendingCashout v1 implementation
         https://opskins.com/kb/api-icashout#method-cancelpendingcashout-v1
 
@@ -88,7 +88,7 @@ class ICashout(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def get_bitcoin_instant_cashout_rate(self):
+    def get_bitcoin_instant_cashout_rate(self) -> APIResponse:
         """GetBitcoinInstantCashoutRate v1 implementation
         https://opskins.com/kb/api-icashout#method-getbitcoininstantcashoutrate-v1
 
@@ -101,7 +101,7 @@ class ICashout(OPSkins):
         link = requests.get(url=api_url, headers=self._headers)
         return APIResponse(link.text)
 
-    def request_paypal(self, amount: int, priority=Cashout.REGULAR):
+    def request_paypal(self, amount: int, priority=Cashout.REGULAR) -> APIResponse:
         """RequestPayPal v1 implementation
         https://opskins.com/kb/api-icashout#method-requestpaypal-v1
 
@@ -119,7 +119,7 @@ class ICashout(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def request_bitcoin(self, amount: int, priority=Cashout.REGULAR):
+    def request_bitcoin(self, amount: int, priority=Cashout.REGULAR) -> APIResponse:
         """RequestBitcoin v1 implementation
         https://opskins.com/kb/api-icashout#method-requestbitcoin-v1
 
@@ -137,7 +137,7 @@ class ICashout(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def request_skrill(self, amount: int):
+    def request_skrill(self, amount: int) -> APIResponse:
         """RequestSkrill v1 implementation
         https://opskins.com/kb/api-icashout#method-requestskrill-v1
 
@@ -153,7 +153,7 @@ class ICashout(OPSkins):
         link = requests.post(url=api_url, data=payload, headers=self._headers)
         return APIResponse(link.text)
 
-    def get_cashout_balance(self):
+    def get_cashout_balance(self) -> APIResponse:
         """GetCashoutableBalance v1 implementation
         https://opskins.com/kb/api-icashout#method-getcashoutablebalance-v1
 
