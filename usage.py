@@ -6,7 +6,9 @@
 import logging
 from pprint import pprint
 
+import kuon.bitskins.api.adapters as bitskins_adapters
 import kuon.bitskins.api.interfaces as bitskins_interfaces
+import kuon.opskins.api.adapters as opskins_adapters
 import kuon.opskins.api.interfaces as opskins_interfaces
 import kuon.opskins.common as opskins_common
 from kuon.common import *
@@ -27,6 +29,11 @@ class UsageWatcher:
 
 class UsageBitSkins:
     """Example usages for the implementation of the BitSkins API"""
+
+    @staticmethod
+    def sales_adapter():
+        sales_adapter = bitskins_adapters.SalesAdapter()
+        pprint(sales_adapter.search("M4 howl min"))
 
     @staticmethod
     def sales_interface():
@@ -60,6 +67,11 @@ class UsageBitSkins:
 
 class UsageOPSkins:
     """Example usages for the implementation of the OPSkins API"""
+
+    @staticmethod
+    def sales_adapter():
+        sales_adapter = opskins_adapters.SalesAdapter()
+        pprint(sales_adapter.search("M4 howl min"))
 
     @staticmethod
     def inventory_interface():
@@ -127,4 +139,5 @@ class UsageOPSkins:
 
 
 if __name__ == '__main__':
-    UsageWatcher.watcher()
+    UsageBitSkins.sales_adapter()
+    UsageOPSkins.sales_adapter()
