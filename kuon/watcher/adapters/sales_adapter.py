@@ -15,3 +15,12 @@ class SalesAdapterBase:
         :return:
         """
         pass
+
+    @abstractmethod
+    def search_no_delay(self, market_name):
+        """Search for a specific item without delay (some APIs delay responses to prevent bot sniping, use workarounds)
+
+        :param market_name:
+        :return:
+        """
+        pass

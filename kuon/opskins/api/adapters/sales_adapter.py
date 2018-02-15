@@ -24,3 +24,12 @@ class SalesAdapter(SalesAdapterBase):
         """
         # ToDo: unify the units(BitSkins float like 5.50, OPSkins int like 550)
         return self.sales_interface.search(search_item=market_name)
+
+    def search_no_delay(self, market_name):
+        """Implementation of the search no delay function
+
+        :param market_name:
+        :return:
+        """
+        # ToDo: unify the units(BitSkins float like 5.50, OPSkins int like 550)
+        return self.sales_interface.search_no_delay(search_item=market_name)
