@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from kuon.api_response import APIResponse
 from kuon.bitskins import BitSkins
-from kuon.bitskins.common import Sorting, SortingDirection
 from kuon.common import *
 
 
@@ -36,40 +35,5 @@ class IInventory(BitSkins):
 
         if page:
             payload['page'] = int(page)
-
-        return self.api_request(api_url=api_url, params=payload)
-
-    def get_inventory_on_sale(self, app_id=CommonSteamGames.APP_ID_CSGO, page=None, sort_by=Sorting.CREATED_AT,
-                              order=SortingDirection.DESCENDING, market_hash_name=None, min_price=None, max_price=None,
-                              has_stickers=False, is_stattrak=False, is_souvenir=False, per_page=None) -> APIResponse:
-        """GetInventoryOnSale v1 implementation
-        https://bitskins.com/api/#get_inventory_on_sale
-
-        :param app_id:
-        :param page:
-        :param sort_by:
-        :param order:
-        :param market_hash_name:
-        :param min_price:
-        :param max_price:
-        :param has_stickers:
-        :param is_stattrak:
-        :param is_souvenir:
-        :param per_page:
-        :return:
-        """
-        arguments = locals()
-        api_url = "https://bitskins.com/api/v1/get_inventory_on_sale/"
-
-        payload = {
-            'app_id': str(app_id)
-        }
-
-        for argument in arguments:
-            if argument == 'self':
-                continue
-
-            if arguments[argument] is not None:
-                payload[argument] = arguments[argument]
 
         return self.api_request(api_url=api_url, params=payload)
