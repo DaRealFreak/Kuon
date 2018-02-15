@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from kuon.api_response import LockedDict
-from kuon.opskins.api.interfaces import ISales, IPricing
 from kuon.common import CommonSteamGames
+from kuon.opskins.api.interfaces import ISales
 from kuon.watcher.tracker import TrackConditions
 
 
