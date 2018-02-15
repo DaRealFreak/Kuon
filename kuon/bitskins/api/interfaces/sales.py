@@ -22,7 +22,7 @@ class ISales(BitSkins):
 
     def get_inventory_on_sale(self, app_id=CommonSteamGames.APP_ID_CSGO, page=None, sort_by=Sorting.PRICE,
                               order=SortingDirection.ASCENDING, market_hash_name=None, min_price=None, max_price=None,
-                              has_stickers=False, is_stattrak=False, is_souvenir=False, per_page=None) -> APIResponse:
+                              has_stickers=None, is_stattrak=None, is_souvenir=None, per_page=None) -> APIResponse:
         """GetInventoryOnSale v1 implementation
         https://bitskins.com/api/#get_inventory_on_sale
 
