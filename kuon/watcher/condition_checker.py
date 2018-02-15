@@ -19,7 +19,6 @@ class ConditionChecker:
         :param sales_interface:
         """
         self.sales_interface = ISales(*args, **kwargs)
-        self.pricing_interface = IPricing(*args, **kwargs)
         self.condition_mapping = {
             TrackConditions.BELOW_VALUE: self._check_below_value,
             TrackConditions.BELOW_AVERAGE_LAST_SOLD: self._check_below_average_last_sold,
