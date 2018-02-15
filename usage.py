@@ -33,7 +33,7 @@ class UsageBitSkins:
     @staticmethod
     def sales_adapter():
         sales_adapter = bitskins_adapters.SalesAdapter()
-        pprint(sales_adapter.search("M4 howl min"))
+        pprint(sales_adapter.search("m4 howl min"))
 
     @staticmethod
     def sales_interface():
@@ -62,7 +62,7 @@ class UsageBitSkins:
         :return:
         """
         inventory_interface = bitskins_interfaces.IInventory()
-        pprint(inventory_interface.get_inventory_on_sale())
+        pprint(inventory_interface.get_my_inventory())
 
 
 class UsageOPSkins:
