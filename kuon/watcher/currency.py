@@ -5,14 +5,14 @@
 class Currency:
     """Class to parse currency amount in a readable format"""
 
-    def __init__(self, cents, currency_sign="$", currency_sign_start=True):
+    def __init__(self, amount, currency_sign="$", currency_sign_start=True):
         """Initializing function
 
-        :param cents:
+        :param amount:
         :param currency_sign:
         :param currency_sign_start:
         """
-        self._amount = cents
+        self._amount = amount
         self._currency_sign = currency_sign
         self._currency_sign_start = currency_sign_start
 
