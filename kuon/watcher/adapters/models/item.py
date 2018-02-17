@@ -3,13 +3,27 @@
 
 from typing import List
 
+from kuon.watcher.adapters.models import AbstractEntity
 from kuon.watcher.adapters.models.sticker import Sticker
 
 
-class Item:
+class Item(AbstractEntity):
+    """General Item Class"""
 
     def __init__(self, app_id: int, class_id: int, context_id: int, instance_id: int, price: int, wear_value: float,
                  image: str, inspect_link: str, stickers: List[Sticker] = None):
+        """Initializing function
+
+        :param app_id:
+        :param class_id:
+        :param context_id:
+        :param instance_id:
+        :param price:
+        :param wear_value:
+        :param image:
+        :param inspect_link:
+        :param stickers:
+        """
         self._app_id = app_id
         self._class_id = class_id
         self._context_id = context_id
@@ -26,6 +40,10 @@ class Item:
 
     @property
     def value(self):
+        """Return all important information from the Steam API
+
+        :return:
+        """
         return {
             'app_id': self._app_id,
             'class_id': self._class_id,
@@ -35,8 +53,32 @@ class Item:
             'wear_value': self._wear_value,
             'image': self._image,
             'inspect_link': self._inspect_link,
-            'stickers': self._stickers
+            'stickers': self.stickers
         }
 
-    def __repr__(self):
-        return str(self.value)
+    @property
+    def stickers(self):
+        """Property for stickers which returns __dict__ of the sticker objects
+        to allow JSON dump the item without custom JSONEncoder objects
+
+        :return:
+        """
+        return [s.__dict__ for s in self._stickers]
+
+    @stickers.setter
+    def stickers(self, stickers: List[Sticker]):
+        """Setter for sticker
+
+        :param stickers:
+        :return:
+        """
+        self._stickers = stickers
+
+    def add_sticker(self, sticker: Sticker):
+        """Adder for sticker
+
+        :param sticker:
+        :return:
+        """
+        if sticker not in self._stickers:
+            self._stickers.append(sticker)
