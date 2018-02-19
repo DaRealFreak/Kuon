@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from time import time
 from typing import List
 
 from kuon.watcher.adapters.models import AbstractEntity
@@ -10,7 +11,7 @@ from kuon.watcher.adapters.models.item import Item
 class SearchResponse(AbstractEntity):
     """General Search Response from the APIs"""
 
-    def __init__(self, success: bool, checked_time: int, items: List[Item] = None):
+    def __init__(self, success: bool, checked_time: int = int(time()), items: List[Item] = None):
         """Initializing function
 
         :param success:
