@@ -3,6 +3,7 @@
 
 from kuon.bitskins.api.interfaces import ISales
 from kuon.watcher.adapters import SalesAdapterBase
+from tests.watcher.adapters.models.parser.search_response import SearchResponseParser
 
 
 class SalesAdapter(SalesAdapterBase):
@@ -22,8 +23,7 @@ class SalesAdapter(SalesAdapterBase):
         :param market_name:
         :return:
         """
-        # ToDo: unify the units(BitSkins float like 5.50, OPSkins int like 550)
-        return self.sales_interface.get_inventory_on_sale(market_hash_name=market_name)
+        return SearchResponseParser.parse(self.sales_interface.get_inventory_on_sale(market_hash_name=market_name))
 
     def search_no_delay(self, market_name):
         """Implementation of the search no delay function
@@ -31,8 +31,7 @@ class SalesAdapter(SalesAdapterBase):
         :param market_name:
         :return:
         """
-        # ToDo: unify the units(BitSkins float like 5.50, OPSkins int like 550)
-        return self.sales_interface.get_inventory_on_sale(market_hash_name=market_name)
+        return SearchResponseParser.parse(self.sales_interface.get_inventory_on_sale(market_hash_name=market_name))
 
     def get_sold_history(self, market_name):
         """Implementation of get sold history function
@@ -51,3 +50,8 @@ class SalesAdapter(SalesAdapterBase):
         """
         # ToDo: use search function to get the full market hash name(partial not allowed here)
         return self.sales_interface.get_sales_info(market_hash_name=market_name)
+
+
+if __name__ == '__main__':
+    from pprint import pprint
+    pprint(SalesAdapter().search("m4 howl min"))
