@@ -34,9 +34,10 @@ class SearchResponse(AbstractEntity):
         """
         return {
             'data': {
-                'status': self._success,
+                'success': self._success,
                 'time': self._time,
-                'items': self.items
+                # market_items since using "items" will return the built-in function in APIResponse
+                'market_items': self.items
             }
         }
 
