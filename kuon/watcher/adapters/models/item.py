@@ -10,10 +10,11 @@ from kuon.watcher.adapters.models.sticker import Sticker
 class Item(AbstractEntity):
     """General Item Class"""
 
-    def __init__(self, app_id: int, class_id: int, context_id: int, instance_id: int, price: int, wear_value: float,
-                 image: str, inspect_link: str, stickers: List[Sticker] = None):
+    def __init__(self, name: str, app_id: int, class_id: int, context_id: int, instance_id: int, price: int,
+                 wear_value: float, image: str, inspect_link: str, stickers: List[Sticker] = None):
         """Initializing function
 
+        :param name:
         :param app_id:
         :param class_id:
         :param context_id:
@@ -24,6 +25,7 @@ class Item(AbstractEntity):
         :param inspect_link:
         :param stickers:
         """
+        self._name = name
         self._app_id = app_id
         self._class_id = class_id
         self._context_id = context_id
@@ -45,6 +47,7 @@ class Item(AbstractEntity):
         :return:
         """
         return {
+            'name': self._name,
             'app_id': self._app_id,
             'class_id': self._class_id,
             'context_id': self._context_id,
