@@ -3,8 +3,7 @@
 
 from kuon.bitskins.api.interfaces import ISales
 from kuon.watcher.adapters import SalesAdapterBase
-from kuon.watcher.adapters.bitskins.parser import SearchResponseParser
-from kuon.watcher.adapters.bitskins.parser.sold_history import SoldHistoryParser
+from kuon.watcher.adapters.bitskins.parser import SearchResponseParser, SoldHistoryParser
 
 
 class SalesAdapter(SalesAdapterBase):
@@ -39,3 +38,12 @@ class SalesAdapter(SalesAdapterBase):
             market_name = search_results[0].name
 
         return SoldHistoryParser.parse(self.sales_interface.get_sales_info(market_hash_name=market_name))
+
+    @staticmethod
+    def get_item_link(item_id: int):
+        """Generate the item link from the item id
+
+        :param item_id:
+        :return:
+        """
+        return "https://bitskins.com/view_item?item_id={0:d}".format(item_id)
