@@ -26,3 +26,12 @@ class SalesAdapterBase:
         :return:
         """
         pass
+
+    @staticmethod
+    @abstractmethod
+    def get_item_link(item_id: int):
+        """Generate the item link from the item id
+
+        :return:
+        """
+        pass
