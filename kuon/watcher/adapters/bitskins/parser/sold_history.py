@@ -21,9 +21,8 @@ class SoldHistoryParser:
         response = SoldHistory(success=results['status'] == 'success')
         for item in results['data']['sales']:
             sold_item = SoldItem(
-                market_name=item['market_hash_name'],
                 price=int(float(item['price']) * 100),
-                wear_value=float(item['sold_at']),
+                wear_value=float(item['wear_value']),
                 sold_at=int(item['sold_at'])
             )
             response.add_sale(sold_item)
