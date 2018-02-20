@@ -79,7 +79,7 @@ class HtmlToJsonParser:
             # why doesn't OPSkins return it as json encoded array though?
             results.append("{0:s},{1:f}".format(name, wear))
             # results.append((name, wear))
-        return results
+        return ','.join(results)
 
     @staticmethod
     def search_result(html):
@@ -102,7 +102,7 @@ class HtmlToJsonParser:
             }
         }
 
-        result_div = soup.select_one("div.col-lg-9")
+        result_div = soup.select_one(".productsgrid")
         result_items = result_div.find_all("div", attrs={"class": "featured-item"})
         for item in result_items:  # type: element.Tag
             # img and sticker ids are not in the data tags of the add to cart button
@@ -118,12 +118,12 @@ class HtmlToJsonParser:
                 'type': unquote(buy_button_tag.get('data-type')),
                 'market_name': unquote(buy_button_tag.get('data-market_name')),
                 'classid': unquote(buy_button_tag.get('data-classid')),
-                'instanceid': None,
+                'instanceid': 0,
                 'appid': int(buy_button_tag.get('data-appid')),
                 'inspect': HtmlToJsonParser._get_inspect_link(item),
                 'stickers': HtmlToJsonParser._get_stickers(item),
                 'id': int(buy_button_tag.get('data-id')),
-                'bot_id': None,
+                'bot_id': 0,
             }
 
             results['response']['sales'].append(res)
