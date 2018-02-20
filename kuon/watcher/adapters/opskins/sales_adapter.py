@@ -3,6 +3,7 @@
 
 from kuon.opskins.api.interfaces import ISales
 from kuon.watcher.adapters import SalesAdapterBase
+from kuon.watcher.adapters.opskins.parser import SearchResponseParser, SoldHistoryParser
 
 
 class SalesAdapter(SalesAdapterBase):
@@ -23,11 +24,12 @@ class SalesAdapter(SalesAdapterBase):
         :param no_delay:
         :return:
         """
-        # ToDo: unify the units(BitSkins float like 5.50, OPSkins int like 550)
         if no_delay:
-            return self.sales_interface.search_no_delay(search_item=market_name)
+            results = self.sales_interface.search_no_delay(search_item=market_name)
         else:
-            return self.sales_interface.search(search_item=market_name)
+            results = self.sales_interface.search(search_item=market_name)
+
+        return SearchResponseParser.parse(results=results)
 
     def get_sold_history(self, market_name, no_delay=False):
         """Implementation of get sold history function
@@ -36,7 +38,22 @@ class SalesAdapter(SalesAdapterBase):
         :param no_delay:
         :return:
         """
+        search_results = self.search(market_name=market_name).data.market_items
+        if search_results:
+            market_name = search_results[0].name
+
         if no_delay:
-            return self.sales_interface.get_last_sales_no_delay(market_name=market_name)
+            results = self.sales_interface.get_last_sales_no_delay(market_name=market_name)
         else:
-            return self.sales_interface.get_last_sales(market_name=market_name)
+            results = self.sales_interface.get_last_sales(market_name=market_name)
+
+        return SoldHistoryParser.parse(results=results)
+
+    @staticmethod
+    def get_item_link(item_id: int):
+        """Generate the item link from the item id
+
+        :param item_id:
+        :return:
+        """
+        return "https://opskins.com/?loc=shop_view_item&item={0:d}".format(item_id)
