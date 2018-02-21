@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from typing import Type
 
 from kuon.api_response import LockedDict
-from kuon.common import CommonSteamGames
-from kuon.opskins.api.interfaces import ISales
+from kuon.watcher.adapters import SalesAdapterBase
 from kuon.watcher.tracker import TrackConditions
 
 
@@ -13,12 +13,12 @@ class ConditionChecker:
     Extra file since there will be more code to come
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, adapter: Type[SalesAdapterBase], *args, **kwargs):
         """Initializing function
 
-        :param sales_interface:
+        :param adapter:
         """
-        self.sales_interface = ISales(*args, **kwargs)
+        self.sales_interface = adapter(*args, **kwargs)
         self.condition_mapping = {
             TrackConditions.BELOW_VALUE: self._check_below_value,
             TrackConditions.BELOW_AVERAGE_LAST_SOLD: self._check_below_average_last_sold,
@@ -33,7 +33,7 @@ class ConditionChecker:
         :param settings:
         :return:
         """
-        return item.amount < settings.value
+        return item.price < settings.value
 
     def _check_below_average_last_sold(self, item: LockedDict, settings: LockedDict):
         """Check if the value of the item is below the average of the last 20 sold items
@@ -42,16 +42,16 @@ class ConditionChecker:
         :param settings:
         :return:
         """
-        last_sold = self.sales_interface.get_last_sales_no_delay(
-            app_id=CommonSteamGames.APP_ID_CSGO,
-            market_name='"{market_name}"'.format(market_name=item.market_name)
+        last_sold = self.sales_interface.get_sold_history(
+            market_name=item.market_name,
+            no_delay=True
         )
-        average_price = sum([sold_item.amount for sold_item in last_sold.response]) / len(last_sold.response)
+        average_price = sum([sold_item.price for sold_item in last_sold.data.sales]) / len(last_sold.data.sales)
 
         if settings.unit == "%":
-            return item.amount < average_price * (1 + settings.value)
+            return item.price < average_price * (1 + settings.value)
         else:
-            return item.amount < average_price + settings.value
+            return item.price < average_price + settings.value
 
     def _check_below_cheapest_last_sold(self, item: LockedDict, settings: LockedDict):
         """Check if the value of the item is below the average of the cheapest sold items
@@ -61,16 +61,15 @@ class ConditionChecker:
         :param settings:
         :return:
         """
-        last_sold = self.sales_interface.get_last_sales_no_delay(
-            app_id=CommonSteamGames.APP_ID_CSGO,
-            market_name='"{market_name}"'.format(market_name=item.market_name)
+        last_sold = self.sales_interface.get_sold_history(
+            market_name=item.market_name
         )
-        lowest_price = min([sold_item.amount for sold_item in last_sold.response])
+        lowest_price = min([sold_item.price for sold_item in last_sold.data.sales])
 
         if settings.unit == "%":
-            return item.amount < lowest_price * (1 + settings.value)
+            return item.price < lowest_price * (1 + settings.value)
         else:
-            return item.amount < lowest_price + settings.value
+            return item.price < lowest_price + settings.value
 
     def check_condition(self, item: LockedDict, settings: LockedDict):
         """Check if the set condition matches on the passed item

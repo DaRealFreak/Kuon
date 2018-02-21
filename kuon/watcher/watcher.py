@@ -4,10 +4,11 @@
 import logging
 import threading
 from time import time, sleep
+from typing import Type
 
 from kuon.api_response import LockedDict
-from kuon.opskins.api.interfaces import ISales
 from kuon.watcher import Settings
+from kuon.watcher.adapters import SalesAdapterBase
 from kuon.watcher.condition_checker import ConditionChecker
 from kuon.watcher.currency import Currency
 from kuon.watcher.notifications import Telegram
@@ -24,7 +25,7 @@ class Watcher(threading.Thread):
     _mail = None
     _telegram = None
 
-    def __init__(self, log_level=logging.ERROR, *args, **kwargs):
+    def __init__(self, adapter: Type[SalesAdapterBase], log_level=logging.ERROR, *args, **kwargs):
         """Initializing function
 
         :param log_level:
@@ -33,11 +34,11 @@ class Watcher(threading.Thread):
 
         # initialize logger
         logging.basicConfig(level=log_level)
-        self.logger = logging.getLogger("opskins_watcher")
+        self.logger = logging.getLogger(adapter.__name__)
 
-        self.sales_interface = ISales(*args, **kwargs)
+        self.sales_interface = adapter(*args, **kwargs)
         self._item_tracker = Tracker()
-        self.condition_checker = ConditionChecker(*args, **kwargs)
+        self.condition_checker = ConditionChecker(adapter, *args, **kwargs)
         self.checked_ids = []
 
         self.validate_settings()
@@ -53,31 +54,31 @@ class Watcher(threading.Thread):
 
             for tracked_item in self._item_tracker.tracked_items:
                 track_index = self._item_tracker.tracked_items.index(tracked_item)
-                results = self.sales_interface.search_no_delay(search_item=tracked_item.search_item)
+                results = self.sales_interface.search(market_name=tracked_item.search_item, no_delay=True)
 
-                for search_item in results.response.sales:
+                for search_item in results.data.market_items:
 
-                    if (track_index, search_item.id) in self.checked_ids:
+                    if (track_index, search_item.item_id) in self.checked_ids:
                         # if we reach the part where we already notified the user
                         # we can break the loop
-                        self.logger.debug("already notified user about item: {item}".format(item=search_item.id))
+                        self.logger.debug("already notified user about item: {item}".format(item=search_item.item_id))
                         break
 
                     if self.condition_checker.check_condition(item=search_item, settings=tracked_item):
                         # condition matches and user didn't get notified yet
                         self.logger.info("conditions ({cond}) met for item: {item}(${price:.2f})({id})".format(
-                            cond=tracked_item, item=search_item.market_name, price=search_item.amount / 100,
-                            id=search_item.id))
+                            cond=tracked_item, item=search_item.market_name, price=search_item.price / 100,
+                            id=search_item.item_id))
                         self.notify_user(item=search_item)
-                        self.checked_ids.append((track_index, search_item.id))
+                        self.checked_ids.append((track_index, search_item.item_id))
 
                     else:
                         # Currently only price conditions are implemented so we can break if the condition is not met
                         # since the default sorting is ascending by price
                         self.logger.info("conditions ({cond}) not met for item: {item}(${price:.2f})({id})".format(
-                            cond=tracked_item, item=search_item.market_name, price=search_item.amount / 100,
-                            id=search_item.id))
-                        self.checked_ids.append((track_index, search_item.id))
+                            cond=tracked_item, item=search_item.market_name, price=search_item.price / 100,
+                            id=search_item.item_id))
+                        self.checked_ids.append((track_index, search_item.item_id))
                         break
 
             duration = time() - start_time
@@ -91,24 +92,24 @@ class Watcher(threading.Thread):
         :param item:
         :return:
         """
-        if item.id in self.checked_ids:
+        if item.item_id in self.checked_ids:
             return False
 
-        item_link = "https://opskins.com/?loc=shop_view_item&item={0:d}".format(item.id)
+        item_link = self.sales_interface.get_item_link(item.item_id)
 
         if Settings.notification_type == NotificationType.Nothing:
             self.logger.info('Search conditions met on item:\n<a href="{item_link}">{name}({price})</a>'.format(
-                item_link=item_link, name=item.market_name, price=Currency(item.amount)))
+                item_link=item_link, name=item.market_name, price=Currency(item.price)))
 
         if Settings.notification_type == NotificationType.Telegram:
             self.telegram.send_message(
                 'Search conditions met on item:\n<a href="{item_link}">{name}({price})</a>'.format(
-                    item_link=item_link, name=item.market_name, price=Currency(item.amount)),
+                    item_link=item_link, name=item.market_name, price=Currency(item.price)),
                 Settings.Notification.Telegram.chat_id, parse_mode="HTML")
 
         if Settings.notification_type == NotificationType.Mail:
             self.mail.send_message("Search conditions met on item", '<a href="{item_link}">{name}({price})</a>'.format(
-                item_link=item_link, name=item.market_name, price=Currency(item.amount)))
+                item_link=item_link, name=item.market_name, price=Currency(item.price)))
 
             raise NotImplementedError("Mail notification is not implemented yet")
 
