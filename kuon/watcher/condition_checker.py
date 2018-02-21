@@ -1,8 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+from json.decoder import JSONDecodeError
 from typing import Type
 
 from kuon.api_response import LockedDict
+from kuon.opskins.api.exceptions import InvalidApiResponseType
 from kuon.watcher.adapters import SalesAdapterBase
 from kuon.watcher.tracker import TrackConditions
 
@@ -79,6 +82,9 @@ class ConditionChecker:
         :return:
         """
         if settings.condition in self.condition_mapping:
-            return self.condition_mapping[settings.condition](item, settings)
+            try:
+                return self.condition_mapping[settings.condition](item, settings)
+            except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError):
+                return False
         else:
             return False

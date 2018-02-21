@@ -3,10 +3,12 @@
 
 import logging
 import threading
+from json.decoder import JSONDecodeError
 from time import time, sleep
 from typing import Type
 
 from kuon.api_response import LockedDict
+from kuon.opskins.api.exceptions import InvalidApiResponseType
 from kuon.watcher import Settings
 from kuon.watcher.adapters import SalesAdapterBase
 from kuon.watcher.condition_checker import ConditionChecker
@@ -52,7 +54,11 @@ class Watcher(threading.Thread):
 
             for tracked_item in self._item_tracker.tracked_items:
                 track_index = self._item_tracker.tracked_items.index(tracked_item)
-                results = self.sales_interface.search(market_name=tracked_item.search_item, no_delay=True)
+                try:
+                    results = self.sales_interface.search(market_name=tracked_item.search_item, no_delay=True)
+                except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError):
+                    self.logger.info("couldn't reach the API")
+                    continue
 
                 for search_item in results.data.market_items:
 
@@ -71,8 +77,8 @@ class Watcher(threading.Thread):
                         self.checked_ids.append((track_index, search_item.item_id))
 
                     else:
-                        # Currently only price conditions are implemented so we can break if the condition is not met
-                        # since the default sorting is ascending by price
+                        # Currently only price conditions are implemented so we can break if the condition
+                        # is not met since the default sorting is ascending by price
                         self.logger.info("conditions ({cond}) not met for item: {item}(${price:.2f})({id})".format(
                             cond=tracked_item, item=search_item.market_name, price=search_item.price / 100,
                             id=search_item.item_id))
