@@ -257,6 +257,11 @@ class ISales(OPSkins):
             payload['max'] = str(price_max)
 
         link = self.selenium_helper.get(url=url, params=payload)
+
+        # if web search is not available return the default API search result
+        if self.UNAVAILABLE_MESSAGE in link.page_source:
+            return self.search(search_item=search_item, app_id=app_id, price_min=price_min, price_max=price_max)
+
         return APIResponse(HtmlToJsonParser.search_result(link.page_source))
 
     def buy_items(self, saleids: list, total) -> APIResponse:
@@ -337,6 +342,11 @@ class ISales(OPSkins):
         }
 
         link = self.selenium_helper.get(url=url, params=payload)
+
+        # if web search is not available return the default API last sale results
+        if self.UNAVAILABLE_MESSAGE in link.page_source:
+            return self.get_last_sales(market_name=market_name, app_id=app_id, context_id=context_id, val_1=val_1)
+
         return APIResponse(HtmlToJsonParser.last_sold(link.page_source))
 
     def get_sales_status(self) -> APIResponse:
