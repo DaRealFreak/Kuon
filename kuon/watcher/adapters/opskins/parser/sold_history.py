@@ -21,7 +21,7 @@ class SoldHistoryParser:
         response = SoldHistory(success=results['status'] == 1)
         for item in results['response']:
             wear = item['wear']
-            if item['wear'] is None:
+            if wear is None:
                 wear = -1.0
 
             sold_item = SoldItem(

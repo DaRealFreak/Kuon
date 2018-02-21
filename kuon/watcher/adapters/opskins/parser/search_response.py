@@ -23,7 +23,7 @@ class SearchResponseParser:
         response = SearchResponse(success=results['status'] == 1, checked_time=results['time'])
         for item in results['response']['sales']:
             wear = item['wear']
-            if item['wear'] is None:
+            if wear is None:
                 wear = -1.0
 
             item_model = Item(
