@@ -15,6 +15,9 @@ from kuon.selenium_helper import SeleniumHelper
 
 
 class OPSkins(object):
+
+    UNAVAILABLE_MESSAGE = "OPSkins is Temporarily Unavailable"
+
     _selenium_helper = None
 
     def __init__(self, api_key=None, no_validate=True):
