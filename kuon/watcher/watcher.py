@@ -30,8 +30,6 @@ class Watcher(threading.Thread):
 
         :param log_level:
         """
-        super().__init__()
-
         # initialize logger
         logging.basicConfig(level=log_level)
         self.logger = logging.getLogger(adapter.__name__)
@@ -42,7 +40,7 @@ class Watcher(threading.Thread):
         self.checked_ids = []
 
         self.validate_settings()
-        self.run()
+        super().__init__(target=self.run)
 
     def run(self):
         """The main function, checking the tracked items in a while True loop
