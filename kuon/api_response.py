@@ -96,6 +96,6 @@ class APIResponse(LockedDict):
         try:
             data = json.loads(data)
         except ValueError:
-            raise InvalidApiResponseType("The API didn't return a valid json format")
+            raise InvalidApiResponseType("The API didn't return a valid json format", data)
 
         super().__init__(data)
