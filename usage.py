@@ -6,11 +6,11 @@
 import logging
 from pprint import pprint
 
-import kuon.bitskins.api.adapters as bitskins_adapters
 import kuon.bitskins.api.interfaces as bitskins_interfaces
-import kuon.opskins.api.adapters as opskins_adapters
 import kuon.opskins.api.interfaces as opskins_interfaces
 import kuon.opskins.common as opskins_common
+import kuon.watcher.adapters.bitskins as bitskins_adapters
+import kuon.watcher.adapters.opskins as opskins_adapters
 from kuon.common import *
 from kuon.watcher import Watcher
 
@@ -24,7 +24,7 @@ class UsageWatcher:
 
         :return:
         """
-        Watcher(log_level=logging.INFO)
+        Watcher(adapter=opskins_adapters.SalesAdapter, log_level=logging.INFO)
 
 
 class UsageBitSkins:
@@ -139,5 +139,4 @@ class UsageOPSkins:
 
 
 if __name__ == '__main__':
-    UsageBitSkins.sales_adapter()
-    UsageOPSkins.sales_adapter()
+    UsageWatcher().watcher()
