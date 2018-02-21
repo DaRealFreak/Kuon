@@ -50,7 +50,7 @@ class TestSearchResponse(unittest.TestCase):
         response.add_item(self._item)
         json_response_dump = json.dumps(response.__dict__)
         api_response = APIResponse(json_response_dump)
-        self.assertEqual(api_response.data.status, True)
+        self.assertEqual(api_response.data.success, True)
 
 
 if __name__ == '__main__':
