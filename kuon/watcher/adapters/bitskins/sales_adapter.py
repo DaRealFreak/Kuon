@@ -6,7 +6,7 @@ from kuon.watcher.adapters import SalesAdapterBase
 from kuon.watcher.adapters.bitskins.parser import SearchResponseParser, SoldHistoryParser
 
 
-class SalesAdapter(SalesAdapterBase):
+class BitSkinsSalesAdapter(SalesAdapterBase):
     """Adapter for the Sales Interface of BitSkins"""
 
     def __init__(self, *args, **kwargs):
