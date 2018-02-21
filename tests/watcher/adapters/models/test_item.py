@@ -30,6 +30,8 @@ class TestItem(unittest.TestCase):
         :return:
         """
         item_1 = Item(
+            market_name='some_market_name',
+            item_id=12345,
             app_id=730,
             class_id=12345,
             context_id=2,
@@ -43,6 +45,8 @@ class TestItem(unittest.TestCase):
         item_1.add_sticker(self._sticker)
 
         item_2 = Item(
+            market_name='some_market_name',
+            item_id=12345,
             app_id=730,
             class_id=12345,
             context_id=2,

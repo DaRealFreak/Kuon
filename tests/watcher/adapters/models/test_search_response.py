@@ -28,6 +28,8 @@ class TestSearchResponse(unittest.TestCase):
         )
 
         self._item = Item(
+            market_name='some_market_name',
+            item_id=12345,
             app_id=730,
             class_id=12345,
             context_id=2,
