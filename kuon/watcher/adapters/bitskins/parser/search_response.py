@@ -53,10 +53,14 @@ class SearchResponseParser:
 
         sticker_results = []
         for sticker in stickers:
+            wear = sticker['wear_value']
+            if wear is None:
+                wear = -1.0
+
             sticker_results.append(Sticker(
                 name=sticker['name'],
                 image=sticker['url'],
-                wear_value=float(sticker['wear_value'])
+                wear_value=float(wear)
             ))
 
         return sticker_results
