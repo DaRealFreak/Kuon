@@ -7,6 +7,14 @@ from abc import ABCMeta, abstractmethod
 class SalesAdapterBase:
     __metaclass__ = ABCMeta
 
+    def __init__(self, *args, **kwargs):
+        """Initializing function to just not display the warning of unexpected arguments
+
+        :param args:
+        :param kwargs:
+        """
+        pass
+
     @abstractmethod
     def search(self, market_name, no_delay=False):
         """Search for a specific item
