@@ -20,9 +20,13 @@ class SoldHistoryParser:
         """
         response = SoldHistory(success=results['status'] == 'success')
         for item in results['data']['sales']:
+            wear = item['wear']
+            if item['wear'] is None:
+                wear = -1.0
+
             sold_item = SoldItem(
                 price=int(float(item['price']) * 100),
-                wear_value=float(item['wear_value']),
+                wear_value=float(wear),
                 sold_at=int(item['sold_at'])
             )
             response.add_sale(sold_item)

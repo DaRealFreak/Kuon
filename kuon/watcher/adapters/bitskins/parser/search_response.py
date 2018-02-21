@@ -21,6 +21,10 @@ class SearchResponseParser:
         """
         response = SearchResponse(success=results['status'] == 'success')
         for item in results['data']['items']:
+            wear = item['float_value']
+            if wear is None:
+                wear = -1.0
+
             item_model = Item(
                 market_name=item['market_hash_name'],
                 item_id=int(item['item_id']),
@@ -29,7 +33,7 @@ class SearchResponseParser:
                 context_id=int(item['context_id']),
                 instance_id=int(item['instance_id']),
                 price=int(float(item['price']) * 100),
-                wear_value=float(item['float_value']),
+                wear_value=float(wear),
                 image=item['image'],
                 inspect_link=item['inspect_link'],
                 stickers=SearchResponseParser.get_stickers(item['stickers'])
