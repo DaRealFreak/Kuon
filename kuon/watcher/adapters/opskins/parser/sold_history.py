@@ -19,11 +19,14 @@ class SoldHistoryParser:
         :return:
         """
         response = SoldHistory(success=results['status'] == 1)
-        print(results)
         for item in results['response']:
+            wear = item['wear']
+            if item['wear'] is None:
+                wear = -1.0
+
             sold_item = SoldItem(
                 price=int(item['amount']),
-                wear_value=float(item['wear']),
+                wear_value=float(wear),
                 sold_at=int(item['timestamp'])
             )
             response.add_sale(sold_item)

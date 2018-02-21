@@ -22,7 +22,7 @@ class SearchResponseParser:
         response = SearchResponse(success=results['status'] == 'success')
         for item in results['data']['items']:
             item_model = Item(
-                name=item['market_hash_name'],
+                market_name=item['market_hash_name'],
                 item_id=int(item['item_id']),
                 app_id=int(item['app_id']),
                 class_id=int(item['class_id']),

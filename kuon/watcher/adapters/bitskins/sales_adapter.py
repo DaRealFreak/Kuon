@@ -15,6 +15,7 @@ class SalesAdapter(SalesAdapterBase):
         :param args:
         :param kwargs:
         """
+        super().__init__(*args, **kwargs)
         self.sales_interface = ISales(*args, **kwargs)
 
     def search(self, market_name, no_delay=False):
@@ -35,7 +36,7 @@ class SalesAdapter(SalesAdapterBase):
         """
         search_results = self.search(market_name=market_name).data.market_items
         if search_results:
-            market_name = search_results[0].name
+            market_name = search_results[0].market_name
 
         return SoldHistoryParser.parse(self.sales_interface.get_sales_info(market_hash_name=market_name))
 

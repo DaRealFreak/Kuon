@@ -15,6 +15,7 @@ class SalesAdapter(SalesAdapterBase):
         :param args:
         :param kwargs:
         """
+        super().__init__(*args, **kwargs)
         self.sales_interface = ISales(*args, **kwargs)
 
     def search(self, market_name, no_delay=False):
@@ -40,7 +41,7 @@ class SalesAdapter(SalesAdapterBase):
         """
         search_results = self.search(market_name=market_name).data.market_items
         if search_results:
-            market_name = search_results[0].name
+            market_name = search_results[0].market_name
 
         if no_delay:
             results = self.sales_interface.get_last_sales_no_delay(market_name=market_name)

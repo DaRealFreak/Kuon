@@ -22,8 +22,12 @@ class SearchResponseParser:
         """
         response = SearchResponse(success=results['status'] == 1, checked_time=results['time'])
         for item in results['response']['sales']:
+            wear = item['wear']
+            if item['wear'] is None:
+                wear = -1.0
+
             item_model = Item(
-                name=item['market_name'],
+                market_name=item['market_name'],
                 # OPSkins doesn't use the item_id from the Steam API but their own id
                 item_id=int(item['id']),
                 app_id=int(item['appid']),
@@ -31,7 +35,7 @@ class SearchResponseParser:
                 context_id=int(item['contextid']),
                 instance_id=int(item['instanceid']),
                 price=int(item['amount']),
-                wear_value=float(item['wear']),
+                wear_value=float(wear),
                 image=item['img'],
                 inspect_link=item['inspect'],
                 stickers=SearchResponseParser.get_stickers(item['stickers'])
