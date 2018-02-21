@@ -24,7 +24,8 @@ class UsageWatcher:
 
         :return:
         """
-        Watcher(adapter=opskins_adapters.SalesAdapter, log_level=logging.INFO)
+        Watcher(adapter=bitskins_adapters.BitSkinsSalesAdapter, log_level=logging.INFO).start()
+        Watcher(adapter=opskins_adapters.OPSkinsSalesAdapter, log_level=logging.INFO).start()
 
 
 class UsageBitSkins:
@@ -32,7 +33,7 @@ class UsageBitSkins:
 
     @staticmethod
     def sales_adapter():
-        sales_adapter = bitskins_adapters.SalesAdapter()
+        sales_adapter = bitskins_adapters.BitSkinsSalesAdapter()
         pprint(sales_adapter.search("m4 howl min"))
 
     @staticmethod
@@ -70,7 +71,7 @@ class UsageOPSkins:
 
     @staticmethod
     def sales_adapter():
-        sales_adapter = opskins_adapters.SalesAdapter()
+        sales_adapter = opskins_adapters.OPSkinsSalesAdapter()
         pprint(sales_adapter.search("M4 howl min"))
 
     @staticmethod
