@@ -35,7 +35,7 @@ class ConditionChecker:
         :param condition:
         :return:
         """
-        return item[condition.key] < condition.value
+        return item[condition.key] >= 0 and (item[condition.key] < condition.value)
 
     def _check_below_average_last_sold(self, item: LockedDict, condition: LockedDict):
         """Check if the value of the item is below the average of the last 20 sold items
@@ -48,9 +48,9 @@ class ConditionChecker:
         avg_value = sum([sold_item[condition.key] for sold_item in last_sold.data.sales]) / len(last_sold.data.sales)
 
         if condition.unit == "%":
-            return item[condition.key] < avg_value * (1 + condition.value)
+            return item[condition.key] >= 0 and (item[condition.key] < avg_value * (1 + condition.value))
         else:
-            return item[condition.key] < avg_value + condition.value
+            return item[condition.key] >= 0 and (item[condition.key] < avg_value + condition.value)
 
     def _check_below_cheapest_last_sold(self, item: LockedDict, condition: LockedDict):
         """Check if the value of the item is below the average of the cheapest sold items
@@ -64,9 +64,9 @@ class ConditionChecker:
         lowest_value = min([sold_item[condition.key] for sold_item in last_sold.data.sales])
 
         if condition.unit == "%":
-            return item[condition.key] < lowest_value * (1 + condition.value)
+            return item[condition.key] >= 0 and (item[condition.key] < lowest_value * (1 + condition.value))
         else:
-            return item[condition.key] < lowest_value + condition.value
+            return item[condition.key] >= 0 and (item[condition.key] < lowest_value + condition.value)
 
     def check_condition(self, item: LockedDict, settings: LockedDict):
         """Check if the set condition matches on the passed item
