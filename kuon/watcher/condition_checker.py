@@ -11,10 +11,7 @@ from kuon.watcher.tracker import TrackConditions
 
 
 class ConditionChecker:
-    """
-    Class for checking if the given conditions match the item
-    Extra file since there will be more code to come
-    """
+    """Class for checking if the given conditions match the item"""
 
     def __init__(self, adapter: Type[SalesAdapterBase], *args, **kwargs):
         """Initializing function
@@ -29,50 +26,50 @@ class ConditionChecker:
         }
 
     @staticmethod
-    def _check_below_value(item: LockedDict, settings: LockedDict):
+    def _check_below_value(item: LockedDict, condition: LockedDict):
         """Check if the value of the item is below the specified search value
 
         :param item:
-        :param settings:
+        :param condition:
         :return:
         """
-        return item.price < settings.value
+        return item[condition.key] < condition.value
 
-    def _check_below_average_last_sold(self, item: LockedDict, settings: LockedDict):
+    def _check_below_average_last_sold(self, item: LockedDict, condition: LockedDict):
         """Check if the value of the item is below the average of the last 20 sold items
 
         :param item:
-        :param settings:
+        :param condition:
         :return:
         """
         last_sold = self.sales_interface.get_sold_history(
             market_name=item.market_name,
             no_delay=True
         )
-        average_price = sum([sold_item.price for sold_item in last_sold.data.sales]) / len(last_sold.data.sales)
+        avg_value = sum([sold_item[condition.key] for sold_item in last_sold.data.sales]) / len(last_sold.data.sales)
 
-        if settings.unit == "%":
-            return item.price < average_price * (1 + settings.value)
+        if condition.unit == "%":
+            return item[condition.key] < avg_value * (1 + condition.value)
         else:
-            return item.price < average_price + settings.value
+            return item[condition.key] < avg_value + condition.value
 
-    def _check_below_cheapest_last_sold(self, item: LockedDict, settings: LockedDict):
+    def _check_below_cheapest_last_sold(self, item: LockedDict, condition: LockedDict):
         """Check if the value of the item is below the average of the cheapest sold items
         of the last 20 purchases
 
         :param item:
-        :param settings:
+        :param condition:
         :return:
         """
         last_sold = self.sales_interface.get_sold_history(
             market_name=item.market_name
         )
-        lowest_price = min([sold_item.price for sold_item in last_sold.data.sales])
+        lowest_value = min([sold_item[condition.key] for sold_item in last_sold.data.sales])
 
-        if settings.unit == "%":
-            return item.price < lowest_price * (1 + settings.value)
+        if condition.unit == "%":
+            return item[condition.key] < lowest_value * (1 + condition.value)
         else:
-            return item.price < lowest_price + settings.value
+            return item[condition.key] < lowest_value + condition.value
 
     def check_condition(self, item: LockedDict, settings: LockedDict):
         """Check if the set condition matches on the passed item
@@ -81,10 +78,7 @@ class ConditionChecker:
         :param settings:
         :return:
         """
-        if settings.condition in self.condition_mapping:
-            try:
-                return self.condition_mapping[settings.condition](item, settings)
-            except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError):
-                return False
-        else:
+        try:
+            return all([self.condition_mapping[cond.condition](item, cond) for cond in settings.conditions])
+        except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError):
             return False

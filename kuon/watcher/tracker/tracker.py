@@ -15,7 +15,7 @@ class TrackConditions:
 class Tracker:
     """Class to track search terms with conditions"""
 
-    ITEM_REQUIRED_KEYWORDS = ('search_item', 'value', 'unit', 'condition')
+    ITEM_REQUIRED_KEYWORDS = ('search_item', 'conditions')
 
     def __init__(self, log_level=logging.ERROR):
         """Initializing function"""
