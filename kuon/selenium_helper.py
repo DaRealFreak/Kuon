@@ -22,7 +22,9 @@ class SeleniumHelper(webdriver.Chrome):
     def __init__(self, log_level=logging.ERROR, *args, **kwargs):
         CHROME_OPTIONS.add_argument("--headless")
         super().__init__(executable_path=CHROMEDRIVER_PATH, chrome_options=CHROME_OPTIONS, *args, **kwargs)
-        logging.basicConfig(level=log_level)
+        logging.basicConfig(level=log_level,
+                            format='[%(asctime)s.%(msecs)03d %(levelname)s %(name)s] %(message)s',
+                            datefmt="%H:%M:%S")
         self.logger = logging.getLogger("selenium_logger")
 
     def get(self, url, params=None, headers=None):
