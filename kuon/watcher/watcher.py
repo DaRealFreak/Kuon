@@ -33,7 +33,9 @@ class Watcher(threading.Thread):
         :param log_level:
         """
         # initialize logger
-        logging.basicConfig(level=log_level)
+        logging.basicConfig(level=log_level,
+                            format='[%(asctime)s.%(msecs)03d %(levelname)s %(name)s] %(message)s',
+                            datefmt="%H:%M:%S")
         self.logger = logging.getLogger(adapter.__name__)
 
         self.sales_interface = adapter(*args, **kwargs)
@@ -53,7 +55,10 @@ class Watcher(threading.Thread):
             start_time = time()
 
             for tracked_item in self._item_tracker.tracked_items:
+                self.logger.debug("searching for item: \"{item}\"".format(item=tracked_item.search_item))
+
                 track_index = self._item_tracker.tracked_items.index(tracked_item)
+
                 try:
                     results = self.sales_interface.search(market_name=tracked_item.search_item, no_delay=True)
                 except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError):
@@ -63,25 +68,25 @@ class Watcher(threading.Thread):
                 for search_item in results.data.market_items:
 
                     if (track_index, search_item.item_id) in self.checked_ids:
-                        # if we reach the part where we already notified the user
-                        # we can break the loop
+                        # continue on items we checked already
                         self.logger.debug("already notified user about item: {item}".format(item=search_item.item_id))
-                        break
+                        continue
 
                     if self.condition_checker.check_condition(item=search_item, settings=tracked_item):
                         # condition matches and user didn't get notified yet
                         self.logger.info("conditions ({cond}) met for item: {item}(${price:.2f})({id})".format(
-                            cond=tracked_item, item=search_item.market_name, price=search_item.price / 100,
+                            cond=tracked_item.conditions, item=search_item.market_name, price=search_item.price / 100,
                             id=search_item.item_id))
                         self.notify_user(item=search_item)
                         self.checked_ids.append((track_index, search_item.item_id))
                     else:
                         self.logger.debug("conditions ({cond}) not met for item: {item}(${price:.2f})({id})".format(
-                            cond=tracked_item, item=search_item.market_name, price=search_item.price / 100,
+                            cond=tracked_item.conditions, item=search_item.market_name, price=search_item.price / 100,
                             id=search_item.item_id))
                         self.checked_ids.append((track_index, search_item.item_id))
 
             duration = time() - start_time
+            self.condition_checker.clear_sold_history_cache()
             if duration < Settings.check_frequency:
                 self.logger.info("sleeping '{:.2f}' seconds".format(Settings.check_frequency - duration))
                 sleep(Settings.check_frequency - duration)
