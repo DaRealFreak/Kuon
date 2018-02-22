@@ -57,7 +57,7 @@ class Watcher(threading.Thread):
                 try:
                     results = self.sales_interface.search(market_name=tracked_item.search_item, no_delay=True)
                 except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError):
-                    self.logger.info("couldn't reach the API")
+                    self.logger.info("could not reach the API though the adapter implementation")
                     continue
 
                 for search_item in results.data.market_items:
@@ -75,15 +75,11 @@ class Watcher(threading.Thread):
                             id=search_item.item_id))
                         self.notify_user(item=search_item)
                         self.checked_ids.append((track_index, search_item.item_id))
-
                     else:
-                        # Currently only price conditions are implemented so we can break if the condition
-                        # is not met since the default sorting is ascending by price
-                        self.logger.info("conditions ({cond}) not met for item: {item}(${price:.2f})({id})".format(
+                        self.logger.debug("conditions ({cond}) not met for item: {item}(${price:.2f})({id})".format(
                             cond=tracked_item, item=search_item.market_name, price=search_item.price / 100,
                             id=search_item.item_id))
                         self.checked_ids.append((track_index, search_item.item_id))
-                        break
 
             duration = time() - start_time
             if duration < Settings.check_frequency:
