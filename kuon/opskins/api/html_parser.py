@@ -140,7 +140,7 @@ class HtmlToJsonParser:
         """
         info_tag_text = sold_item.find_next('span', attrs={'class': 'text-left'}).text
         # currently max price $9.x m, don't think prices will ever go above 10m
-        price_and_wear = re.findall('^\$(\d{0,4},?\d{1,3}.\d{2}) \((\d+.\d+)%\)', info_tag_text)[0]
+        price_and_wear = re.findall('^\$(\d{0,4},?\d{1,3}.\d{2}) \((\d+.?\d{0,99})%\)', info_tag_text)[0]
         # price is returned in the smallest unit by the API but displayed in $ from the web
         price = int(float(price_and_wear[0].replace(',', '')) * 100)
         # wear is displayed in percentage, get in numerical format
