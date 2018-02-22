@@ -19,8 +19,10 @@ class Tracker:
 
     def __init__(self, log_level=logging.ERROR):
         """Initializing function"""
-        logging.basicConfig(level=log_level)
-        self.logger = logging.getLogger("opskins_tracker")
+        logging.basicConfig(level=log_level,
+                            format='[%(asctime)s.%(msecs)03d %(levelname)s %(name)s] %(message)s',
+                            datefmt="%H:%M:%S")
+        self.logger = logging.getLogger("watcher_tracker")
 
         self._json_manager = JsonManager()
         self._tracked_items = self._json_manager.get_tracked_items(self.ITEM_REQUIRED_KEYWORDS)
