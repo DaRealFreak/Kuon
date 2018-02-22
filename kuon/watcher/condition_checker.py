@@ -13,6 +13,8 @@ from kuon.watcher.tracker import TrackConditions
 class ConditionChecker:
     """Class for checking if the given conditions match the item"""
 
+    _cache = {}
+
     def __init__(self, adapter: Type[SalesAdapterBase], *args, **kwargs):
         """Initializing function
 
@@ -42,10 +44,7 @@ class ConditionChecker:
         :param condition:
         :return:
         """
-        last_sold = self.sales_interface.get_sold_history(
-            market_name=item.market_name,
-            no_delay=True
-        )
+        last_sold = self.get_sold_history(market_name=item.market_name, no_delay=True)
         avg_value = sum([sold_item[condition.key] for sold_item in last_sold.data.sales]) / len(last_sold.data.sales)
 
         if condition.unit == "%":
@@ -61,9 +60,7 @@ class ConditionChecker:
         :param condition:
         :return:
         """
-        last_sold = self.sales_interface.get_sold_history(
-            market_name=item.market_name
-        )
+        last_sold = self.get_sold_history(market_name=item.market_name, no_delay=True)
         lowest_value = min([sold_item[condition.key] for sold_item in last_sold.data.sales])
 
         if condition.unit == "%":
@@ -82,3 +79,28 @@ class ConditionChecker:
             return all([self.condition_mapping[cond.condition](item, cond) for cond in settings.conditions])
         except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError):
             return False
+
+    def get_sold_history(self, market_name, no_delay=False):
+        """Cache the sold history entries to execute less queries
+
+        :param market_name:
+        :param no_delay:
+        :return:
+        """
+        if market_name not in self._cache:
+            self._cache[market_name] = {}
+
+        if no_delay not in self._cache[market_name]:
+            last_sold = self.sales_interface.get_sold_history(
+                market_name=market_name,
+                no_delay=True
+            )
+            self._cache[market_name][no_delay] = last_sold
+        return self._cache[market_name][no_delay]
+
+    def clear_sold_history_cache(self):
+        """Clear the sold history cache
+
+        :return:
+        """
+        self._cache = {}
