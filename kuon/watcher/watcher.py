@@ -7,6 +7,8 @@ from json.decoder import JSONDecodeError
 from time import time, sleep
 from typing import Type
 
+from requests.exceptions import ConnectionError as RequestsConnectionError
+
 from kuon.api_response import LockedDict
 from kuon.opskins.api.exceptions import InvalidApiResponseType
 from kuon.watcher import Settings
@@ -61,7 +63,7 @@ class Watcher(threading.Thread):
 
                 try:
                     results = self.sales_interface.search(market_name=tracked_item.search_item, no_delay=True)
-                except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError):
+                except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError, RequestsConnectionError):
                     self.logger.info("could not reach the API though the adapter implementation")
                     continue
 

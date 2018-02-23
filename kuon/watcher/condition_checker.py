@@ -4,6 +4,8 @@
 from json.decoder import JSONDecodeError
 from typing import Type
 
+from requests.exceptions import ConnectionError as RequestsConnectionError
+
 from kuon.api_response import LockedDict
 from kuon.opskins.api.exceptions import InvalidApiResponseType
 from kuon.watcher.adapters import SalesAdapterBase
@@ -77,7 +79,7 @@ class ConditionChecker:
         """
         try:
             return all([self.condition_mapping[cond.condition](item, cond) for cond in settings.conditions])
-        except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError):
+        except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError, RequestsConnectionError):
             return False
 
     def get_sold_history(self, market_name, no_delay=False):
