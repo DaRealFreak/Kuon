@@ -103,7 +103,12 @@ class HtmlToJsonParser:
         }
 
         result_div = soup.select_one(".productsgrid")
-        result_items = result_div.find_all("div", attrs={"class": "featured-item"})
+
+        if result_div:
+            result_items = []
+        else:
+            result_items = result_div.find_all("div", attrs={"class": "featured-item"})
+
         for item in result_items:  # type: element.Tag
             # img and sticker ids are not in the data tags of the add to cart button
             buy_button_tag = item.find('button', attrs={'data-buttontype': 'addtocart'})
