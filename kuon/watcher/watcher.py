@@ -8,6 +8,7 @@ from time import time, sleep
 from typing import Type
 
 from requests.exceptions import ConnectionError as RequestsConnectionError
+from selenium.common.exceptions import TimeoutException
 
 from kuon.api_response import LockedDict
 from kuon.opskins.api.exceptions import InvalidApiResponseType
@@ -63,7 +64,7 @@ class Watcher(threading.Thread):
 
                 try:
                     results = self.sales_interface.search(market_name=tracked_item.search_item, no_delay=True)
-                except (InvalidApiResponseType, JSONDecodeError, ValueError, AttributeError, RequestsConnectionError):
+                except (InvalidApiResponseType, JSONDecodeError, RequestsConnectionError, TimeoutException):
                     self.logger.info("could not reach the API though the adapter implementation")
                     continue
 
