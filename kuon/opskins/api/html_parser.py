@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import logging
 import re
 from datetime import datetime
 from time import time
@@ -104,7 +105,8 @@ class HtmlToJsonParser:
 
         result_div = soup.select_one(".productsgrid")
 
-        if result_div:
+        if not result_div:
+            logging.error("OPSkins: the used selector had no results")
             result_items = []
         else:
             result_items = result_div.find_all("div", attrs={"class": "featured-item"})
