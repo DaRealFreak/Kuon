@@ -72,7 +72,8 @@ class UsageOPSkins:
     @staticmethod
     def sales_adapter():
         sales_adapter = opskins_adapters.OPSkinsSalesAdapter()
-        pprint(sales_adapter.search("M4 howl min"))
+        pprint(sales_adapter.search("AK-47 | Aquamarine Revenge (Field-Tested)"))
+        pprint(sales_adapter.search("M4A4 | Howl (Minimal Wear)", True))
 
     @staticmethod
     def inventory_interface():
