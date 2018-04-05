@@ -6,7 +6,7 @@ import os
 # noinspection PyPackageRequirements
 import dotenv
 
-dotenv_path = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, '.env')
+dotenv_path = os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, '.env')
 dotenv.load_dotenv(dotenv_path)
 
 

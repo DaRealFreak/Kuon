@@ -11,7 +11,7 @@ from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
 
-CHROMEDRIVER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'bin\\ChromeHeadless',
+CHROMEDRIVER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, 'bin\\ChromeHeadless',
                                                  sys.platform, 'chromedriver'))
 CHROME_OPTIONS = Options()
 

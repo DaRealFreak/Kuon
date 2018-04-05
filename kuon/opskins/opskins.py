@@ -32,7 +32,7 @@ class OPSkins(object):
         if api_key:
             self._api_key = api_key
         else:
-            dotenv_path = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, '.env')
+            dotenv_path = os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, '.env')
             dotenv.load_dotenv(dotenv_path)
             self._api_key = os.environ.get('OPSKINS_API_KEY')
 

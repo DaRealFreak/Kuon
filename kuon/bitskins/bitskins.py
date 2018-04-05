@@ -24,7 +24,7 @@ class BitSkins(object):
         :type api_key: string
         :type secret: string
         """
-        dotenv_path = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, '.env')
+        dotenv_path = os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, '.env')
         dotenv.load_dotenv(dotenv_path)
 
         self._api_key = api_key

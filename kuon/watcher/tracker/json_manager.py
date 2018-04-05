@@ -12,7 +12,7 @@ class JsonManager:
     """
 
     json_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, os.pardir, "tracker.json"))
+        os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, os.path.pardir, "tracker.json"))
 
     @staticmethod
     def save_tracked_items(items: list):
