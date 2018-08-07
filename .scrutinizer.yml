@@ -5,7 +5,7 @@ imports:
 
 build:
   environment:
-    python: 3.7.0
+    python: 3.6.3
   tests:
     before:
     - 'python setup.py install'
