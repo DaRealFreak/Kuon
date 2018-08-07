@@ -13,7 +13,7 @@ matrix:
     - python: nightly
 
 install:
-  - pip install .
+  - python setup.py install
   - pip install nose-exclude
   - pip install coveralls
 
