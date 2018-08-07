@@ -11,7 +11,7 @@ from requests.exceptions import ConnectionError as RequestsConnectionError
 from selenium.common.exceptions import TimeoutException
 
 from kuon.api_response import LockedDict
-from kuon.opskins.api.exceptions import InvalidApiResponseType
+from kuon.exceptions import InvalidApiResponseType
 from kuon.watcher import Settings
 from kuon.watcher.adapters import SalesAdapterBase
 from kuon.watcher.condition_checker import ConditionChecker

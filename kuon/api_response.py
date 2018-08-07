@@ -4,7 +4,7 @@
 import json
 from collections import MutableSequence
 
-from kuon.opskins.api.exceptions import *
+from kuon.exceptions import InvalidApiResponseType
 
 
 class LockedList(MutableSequence):
