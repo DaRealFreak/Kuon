@@ -24,8 +24,9 @@ build:
         before:
         - 'python setup.py install'
         - 'pip install nose-exclude'
+        - 'pip install coveralls'
         override:
-          - command: 'nosetests'
+          - command: 'nosetests --with-coverage --cover-package=kuon'
             coverage:
               file: '.coverage'
               config_file: '.coveragerc'
