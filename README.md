@@ -4,7 +4,11 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaRealFreak/Kuon/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaRealFreak/Kuon/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/DaRealFreak/Kuon/badge.svg?branch=master)](https://coveralls.io/github/DaRealFreak/Kuon?branch=master)
 
-bot to track prices on [OPSkins](https://opskins.com) and [Bitskins](https://bitskins.com) and notify the user if search conditions are met
+bot to track prices on [Bitskins](https://bitskins.com) and notify the user if search conditions are met.
+
+Previously OPSkins was supported too, but Valve banned them from trading CsGo Items so I removed the adapters for it.
+
+In case another trading website pops up you can create an issue and I'll most likely add support for it.
 
 
 ### Installing
