@@ -10,7 +10,7 @@ from kuon.watcher.adapters.models.sticker import Sticker
 class Item(AbstractEntity):
     """General Item Class"""
 
-    def __init__(self, market_name: str, item_id: int, app_id: int, class_id: int, context_id: int, instance_id: int,
+    def __init__(self, market_name: str, item_id: str, app_id: int, class_id: int, context_id: int, instance_id: int,
                  price: int, wear_value: float, image: str, inspect_link: str, stickers: List[Sticker] = None):
         """Initializing function
 

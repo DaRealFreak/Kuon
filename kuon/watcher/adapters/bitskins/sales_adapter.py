@@ -41,10 +41,10 @@ class BitSkinsSalesAdapter(SalesAdapterBase):
         return SoldHistoryParser.parse(self.sales_interface.get_sales_info(market_hash_name=market_name))
 
     @staticmethod
-    def get_item_link(item_id: int):
+    def get_item_link(item_id: str):
         """Generate the item link from the item id
 
         :param item_id:
         :return:
         """
-        return "https://bitskins.com/view_item?item_id={0:d}".format(item_id)
+        return "https://bitskins.com/view_item?item_id={0:s}".format(item_id)
