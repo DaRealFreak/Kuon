@@ -38,7 +38,6 @@ ISales:
 IUser:
     Get Account Balance
 """
-
 from kuon.bitskins.api.interfaces.cashout import ICashout
 from kuon.bitskins.api.interfaces.history import IHistory
 from kuon.bitskins.api.interfaces.inventory import IInventory
