@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import unittest
 
 from kuon.watcher.currency import Currency
@@ -11,7 +10,7 @@ class TestCurrency(unittest.TestCase):
     test cases for the currency module of the watcher
     """
 
-    def test_usd(self):
+    def test_usd(self) -> None:
         """Test currency with default settings(sign = $ and sign before the amount)
 
         :return:
@@ -21,7 +20,7 @@ class TestCurrency(unittest.TestCase):
         self.assertEqual(currency.human_readable, "$15.01")
         self.assertEqual(currency.amount, 1501)
 
-    def test_eur(self):
+    def test_eur(self) -> None:
         """Test currency with euro settings(sign = € and sign after the amount)
 
         :return:

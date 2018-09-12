@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 from kuon.watcher.notifications.mail import Mail
 
 if __name__ == "__main__":

@@ -1,6 +1,5 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import json
 import unittest
 from time import time
@@ -12,11 +11,9 @@ from kuon.watcher.adapters.models.sticker import Sticker
 
 
 class TestSearchResponse(unittest.TestCase):
-    """
-    Test cases for the search response model like proper JSON dump and ability to parse to APIResponse object
-    """
+    """Test cases for the search response model like proper JSON dump and ability to parse to APIResponse object"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up the item to add
 
         :return:
@@ -29,7 +26,7 @@ class TestSearchResponse(unittest.TestCase):
 
         self._item = Item(
             market_name='some_market_name',
-            item_id=12345,
+            item_id='abc123',
             app_id=730,
             class_id=12345,
             context_id=2,
@@ -41,7 +38,7 @@ class TestSearchResponse(unittest.TestCase):
             stickers=[sticker]
         )
 
-    def test_response(self):
+    def test_response(self) -> None:
         """Test the conversion to the APIResponse object and the json.dumps
 
         :return:

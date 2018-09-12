@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 from kuon.watcher.tracker import TrackConditions
 from kuon.watcher.tracker.json_manager import JsonManager
 

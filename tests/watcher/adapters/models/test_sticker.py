@@ -1,6 +1,5 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import json
 import unittest
 
@@ -9,11 +8,9 @@ from kuon.watcher.adapters.models.sticker import Sticker
 
 
 class TestSticker(unittest.TestCase):
-    """
-    Test cases for the sticker model
-    """
+    """Test cases for the sticker model"""
 
-    def test_sticker(self):
+    def test_sticker(self) -> None:
         """Test the conversion to the APIResponse object and the json.dumps
 
         :return:

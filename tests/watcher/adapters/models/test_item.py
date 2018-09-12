@@ -1,6 +1,5 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import json
 import unittest
 
@@ -9,11 +8,9 @@ from kuon.watcher.adapters.models.sticker import Sticker
 
 
 class TestItem(unittest.TestCase):
-    """
-    Test cases for the item model for the properties
-    """
+    """Test cases for the item model for the properties"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up the sticker to add
 
         :return:
@@ -24,14 +21,14 @@ class TestItem(unittest.TestCase):
             wear_value=0.43092
         )
 
-    def test_item(self):
+    def test_item(self) -> None:
         """Test the conversion to the APIResponse object and the json.dumps
 
         :return:
         """
         item_1 = Item(
             market_name='some_market_name',
-            item_id=12345,
+            item_id='abc123',
             app_id=730,
             class_id=12345,
             context_id=2,
@@ -46,7 +43,7 @@ class TestItem(unittest.TestCase):
 
         item_2 = Item(
             market_name='some_market_name',
-            item_id=12345,
+            item_id='abc123',
             app_id=730,
             class_id=12345,
             context_id=2,
