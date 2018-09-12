@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from typing import Union
+
 from kuon.api_response import APIResponse
 from kuon.bitskins import BitSkins
 from kuon.bitskins.common import *
@@ -16,27 +18,33 @@ class ISales(BitSkins):
             The full market name of the item. For example: "AK-47 | Aquamarine Revenge (Field-Tested)"
     """
 
-    def __init__(self, *args, **kwargs):
-        """Initializing function"""
+    def __init__(self, *args, **kwargs) -> None:
+        """Initializing function
+
+        :type args: list
+        :type kwargs: dict
+        """
         super().__init__(*args, **kwargs)
 
-    def get_inventory_on_sale(self, app_id=CommonSteamGames.APP_ID_CSGO, page=None, sort_by=Sorting.PRICE,
-                              order=SortingDirection.ASCENDING, market_hash_name=None, min_price=None, max_price=None,
-                              has_stickers=None, is_stattrak=None, is_souvenir=None, per_page=None) -> APIResponse:
+    def get_inventory_on_sale(self, app_id: int = CommonSteamGames.APP_ID_CSGO, page: int = None,
+                              sort_by: str = Sorting.PRICE, order: str = SortingDirection.ASCENDING,
+                              market_hash_name: str = None, min_price: int = None, max_price: int = None,
+                              has_stickers: bool = None, is_stattrak: bool = None, is_souvenir: bool = None,
+                              per_page: int = None) -> APIResponse:
         """GetInventoryOnSale v1 implementation
         https://bitskins.com/api/#get_inventory_on_sale
 
-        :param app_id:
-        :param page:
-        :param sort_by:
-        :param order:
-        :param market_hash_name:
-        :param min_price:
-        :param max_price:
-        :param has_stickers:
-        :param is_stattrak:
-        :param is_souvenir:
-        :param per_page:
+        :type app_id: int
+        :type page: int
+        :type sort_by: str
+        :type order: str
+        :type market_hash_name: str
+        :type min_price: int
+        :type max_price: int
+        :type has_stickers: bool
+        :type is_stattrak: bool
+        :type is_souvenir: bool
+        :type per_page: int
         :return:
         """
         arguments = locals()
@@ -55,13 +63,14 @@ class ISales(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def get_sales_info(self, market_hash_name: str, app_id=CommonSteamGames.APP_ID_CSGO, page=None) -> APIResponse:
+    def get_sales_info(self, market_hash_name: str, app_id: int = CommonSteamGames.APP_ID_CSGO,
+                       page: int = None) -> APIResponse:
         """GetRecentSaleInfo v1 implementation
         https://bitskins.com/api#get_sales_info
 
-        :param market_hash_name:
-        :param page:
-        :param app_id:
+        :type market_hash_name: str
+        :type page: int
+        :type app_id: int
         :return:
         """
         api_url = 'https://bitskins.com/api/v1/get_sales_info/'
@@ -76,15 +85,15 @@ class ISales(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def buy_item(self, item_ids: list, prices: list, app_id=CommonSteamGames.APP_ID_CSGO,
-                 auto_trade=True) -> APIResponse:
+    def buy_item(self, item_ids: Union[list, tuple], prices: Union[list, tuple],
+                 app_id: int = CommonSteamGames.APP_ID_CSGO, auto_trade: bool = True) -> APIResponse:
         """BuyItem v1 implementation
         https://bitskins.com/api#buy_item
 
-        :param item_ids:
-        :param prices:
-        :param app_id:
-        :param auto_trade:
+        :type item_ids: Union[list, tuple]
+        :type prices: Union[list, tuple]
+        :type app_id: int
+        :type auto_trade: bool
         :return:
         """
         api_url = 'https://bitskins.com/api/v1/buy_item/'
@@ -100,13 +109,14 @@ class ISales(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def list_item_for_sale(self, item_ids: list, prices: list, app_id=CommonSteamGames.APP_ID_CSGO) -> APIResponse:
+    def list_item_for_sale(self, item_ids: Union[list, tuple], prices: Union[list, tuple],
+                           app_id: int = CommonSteamGames.APP_ID_CSGO) -> APIResponse:
         """SellItem v1 implementation
         https://bitskins.com/api#list_item_for_sale
 
-        :param item_ids:
-        :param prices:
-        :param app_id:
+        :type item_ids: Union[list, tuple]
+        :type prices: Union[list, tuple]
+        :type app_id: int
         :return:
         """
         api_url = 'https://bitskins.com/api/v1/list_item_for_sale/'
@@ -119,13 +129,14 @@ class ISales(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def modify_sale_item(self, item_ids: list, prices: list, app_id=CommonSteamGames.APP_ID_CSGO) -> APIResponse:
+    def modify_sale_item(self, item_ids: Union[list, tuple], prices: Union[list, tuple],
+                         app_id: int = CommonSteamGames.APP_ID_CSGO) -> APIResponse:
         """ModifySale v1 implementation
         https://bitskins.com/api#modify_sale_item
 
-        :param item_ids:
-        :param prices:
-        :param app_id:
+        :type item_ids: Union[list, tuple]
+        :type prices: Union[list, tuple]
+        :type app_id: int
         :return:
         """
         api_url = 'https://bitskins.com/api/v1/modify_sale_item/'
@@ -138,12 +149,12 @@ class ISales(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def withdraw_item(self, item_ids: list, app_id=CommonSteamGames.APP_ID_CSGO) -> APIResponse:
+    def withdraw_item(self, item_ids: Union[list, tuple], app_id: int = CommonSteamGames.APP_ID_CSGO) -> APIResponse:
         """WithdrawItem v1 implementation
         https://bitskins.com/api#withdraw_item
 
-        :param item_ids:
-        :param app_id:
+        :type item_ids: Union[list, tuple]
+        :type app_id: int
         :return:
         """
         api_url = 'https://bitskins.com/api/v1/withdraw_item/'
@@ -155,12 +166,12 @@ class ISales(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def bump_item(self, item_ids: list, app_id=CommonSteamGames.APP_ID_CSGO) -> APIResponse:
+    def bump_item(self, item_ids: Union[list, tuple], app_id: int = CommonSteamGames.APP_ID_CSGO) -> APIResponse:
         """BumpItem v1 implementation
         https://bitskins.com/api#bump_item
 
-        :param item_ids:
-        :param app_id:
+        :type item_ids: Union[list, tuple]
+        :type app_id:
         :return:
         """
         api_url = 'https://bitskins.com/api/v1/bump_item/'
@@ -172,12 +183,12 @@ class ISales(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def get_reset_price_items(self, app_id=CommonSteamGames.APP_ID_CSGO, page=None) -> APIResponse:
+    def get_reset_price_items(self, app_id: int = CommonSteamGames.APP_ID_CSGO, page: int = None) -> APIResponse:
         """GetResetPriceItems v1 implementation
         https://bitskins.com/api#get_reset_price_items
 
-        :param app_id:
-        :param page:
+        :type app_id: int
+        :type page: int
         :return:
         """
         api_url = 'https://bitskins.com/api/v1/get_reset_price_items/'
@@ -191,14 +202,14 @@ class ISales(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def get_steam_price_data(self, market_hash_name: str, app_id=CommonSteamGames.APP_ID_CSGO) -> APIResponse:
+    def get_steam_price_data(self, market_hash_name: str, app_id: int = CommonSteamGames.APP_ID_CSGO) -> APIResponse:
         """GetRawPriceData v1 implementation
         https://bitskins.com/api#get_steam_price_data
 
         Returns the cheapest steam market price
 
-        :param market_hash_name:
-        :param app_id:
+        :type market_hash_name: str
+        :type app_id: int
         :return:
         """
         api_url = 'https://bitskins.com/api/v1/get_steam_price_data/'
@@ -210,14 +221,15 @@ class ISales(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def get_specific_items_on_sale(self, item_ids: list, app_id=CommonSteamGames.APP_ID_CSGO) -> APIResponse:
+    def get_specific_items_on_sale(self, item_ids: Union[list, tuple],
+                                   app_id: int = CommonSteamGames.APP_ID_CSGO) -> APIResponse:
         """GetSpecificItemsOnSale v1 implementation
         https://bitskins.com/api#get_specific_items_on_sale
 
         Returns detailed information of requested items currently on sale on BitSkins
 
-        :param item_ids:
-        :param app_id:
+        :type item_ids: Union[list, tuple]
+        :type app_id: int
         :return:
         """
         api_url = 'https://bitskins.com/api/v1/get_specific_items_on_sale/'

@@ -1,33 +1,31 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import json
 import os
 from json import JSONDecodeError
+from typing import Union
 
 
-class JsonManager:
-    """
-    Class used for the file handling and parsing of the tracker.json
-    """
+class JsonManager(object):
+    """Class used for the file handling and parsing of the tracker.json"""
 
     json_path = os.path.abspath(
         os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, os.path.pardir, "tracker.json"))
 
     @staticmethod
-    def save_tracked_items(items: list):
+    def save_tracked_items(items: list) -> None:
         """Dump the tracked items into the json file
 
-        :param items:
+        :type items: Union[list, tuple]
         :return:
         """
         json.dump(items, open(JsonManager.json_path, "w", encoding="utf-8"))
 
     @staticmethod
-    def get_tracked_items(required_keys=None) -> list:
+    def get_tracked_items(required_keys: Union[list, tuple] = None) -> list:
         """Load the tracked items from the json file
 
-        :param required_keys:
+        :type required_keys: Union[list, tuple]
         :return:
         """
         if required_keys is None:

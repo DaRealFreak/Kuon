@@ -13,15 +13,19 @@ class IHistory(BitSkins):
             The Steam AppID of the game which owns this item (e.g. 730 for CS:GO, 440 for TF2, 570 for Dota 2)
     """
 
-    def __init__(self, *args, **kwargs):
-        """Initializing function"""
+    def __init__(self, *args, **kwargs) -> None:
+        """Initializing function
+
+        :type args: list
+        :type kwargs: dict
+        """
         super().__init__(*args, **kwargs)
 
-    def get_money_events(self, page=None) -> APIResponse:
+    def get_money_events(self, page: int = None) -> APIResponse:
         """GetMoneyEvents v1 implementation
         https://bitskins.com/api/#get_money_events
 
-        :param page:
+        :type page: int
         :return:
         """
         api_url = "https://bitskins.com/api/v1/get_money_events/"
@@ -33,12 +37,12 @@ class IHistory(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def get_buy_history(self, app_id=CommonSteamGames.APP_ID_CSGO, page=None) -> APIResponse:
+    def get_buy_history(self, app_id: int = CommonSteamGames.APP_ID_CSGO, page: int = None) -> APIResponse:
         """GetBuyHistory v1 implementation
         https://bitskins.com/api/#get_buy_history
 
-        :param app_id:
-        :param page:
+        :type app_id: int
+        :type page: int
         :return:
         """
         api_url = "https://bitskins.com/api/v1/get_buy_history/"
@@ -52,12 +56,12 @@ class IHistory(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def get_sell_history(self, app_id=CommonSteamGames.APP_ID_CSGO, page=None) -> APIResponse:
+    def get_sell_history(self, app_id: int = CommonSteamGames.APP_ID_CSGO, page: int = None) -> APIResponse:
         """GetSellHistory v1 implementation
         https://bitskins.com/api/#get_sell_history
 
-        :param app_id:
-        :param page:
+        :type app_id:
+        :type page:
         :return:
         """
         api_url = "https://bitskins.com/api/v1/get_sell_history/"
@@ -71,16 +75,16 @@ class IHistory(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def get_item_history(self, app_id=CommonSteamGames.APP_ID_CSGO, page=None, names="", delimiter="",
-                         per_page=None) -> APIResponse:
+    def get_item_history(self, app_id: int = CommonSteamGames.APP_ID_CSGO, page: int = None, names: str = "",
+                         delimiter: str = "", per_page: int = None) -> APIResponse:
         """GetItemHistory v1 implementation
         https://bitskins.com/api/#get_item_history
 
-        :param app_id:
-        :param page:
-        :param names:
-        :param delimiter:
-        :param per_page:
+        :type app_id: int
+        :type page: int
+        :type names: str
+        :type delimiter: str
+        :type per_page: int
         :return:
         """
         api_url = "https://bitskins.com/api/v1/get_item_history/"
@@ -104,8 +108,8 @@ class IHistory(BitSkins):
         """GetTradeDetails v1 implementation
         https://bitskins.com/api/#get_trade_details
 
-        :param trade_id:
-        :param trade_token:
+        :type trade_id: str
+        :type trade_token: str
         :return:
         """
         api_url = "https://bitskins.com/api/v1/get_trade_details/"
@@ -117,11 +121,11 @@ class IHistory(BitSkins):
 
         return self.api_request(api_url=api_url, params=payload)
 
-    def get_recent_trade_offers(self, active_only=False) -> APIResponse:
+    def get_recent_trade_offers(self, active_only: bool = False) -> APIResponse:
         """GetRecentTradeOffers v1 implementation
         https://bitskins.com/api/#get_recent_trade_offers
 
-        :param active_only:
+        :type active_only: bool
         :return:
         """
         api_url = "https://bitskins.com/api/v1/get_recent_trade_offers/"

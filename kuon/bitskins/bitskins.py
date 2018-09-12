@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-# covered by python-dotenv
-# noinspection PyPackageRequirements
 import dotenv
 import pyotp
 import requests
@@ -16,13 +14,13 @@ from kuon.selenium_helper import SeleniumHelper
 class BitSkins(object):
     _selenium_helper = None
 
-    def __init__(self, api_key=None, secret=None):
+    def __init__(self, api_key: str = None, secret: str = None) -> None:
         """Initializing function
         According to the API documentation (https://bitskins.com/api/python#totp_code) they
         require OTPs and the API key so we verify the API key and the secret and generate the OTPs with a property
 
-        :type api_key: string
-        :type secret: string
+        :type api_key: str
+        :type secret: str
         """
         dotenv_path = os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, '.env')
         dotenv.load_dotenv(dotenv_path)
@@ -45,12 +43,12 @@ class BitSkins(object):
         self._pyotp = pyotp.TOTP(self._secret)
         self.validate_api_key()
 
-    def api_request(self, api_url, params=None, headers=None):
+    def api_request(self, api_url: str, params: dict = None, headers: dict = None) -> APIResponse:
         """Insert API key and OTP code to the payload and return the parsed response
 
-        :param api_url:
-        :param params:
-        :param headers:
+        :type api_url: str
+        :type params: dict
+        :type headers: dict
         :return:
         """
         if headers is None:
@@ -65,7 +63,7 @@ class BitSkins(object):
 
         return APIResponse(link.text)
 
-    def validate_api_key(self):
+    def validate_api_key(self) -> None:
         """Validate the api key and the 2 FA secret
 
         :return:
@@ -77,7 +75,7 @@ class BitSkins(object):
             raise InvalidOrWrongApiKeyException('Please provide a valid API key and 2 FA secret')
 
     @property
-    def selenium_helper(self):
+    def selenium_helper(self) -> SeleniumHelper:
         """Use property to make this lazy since it takes 3-4 seconds to load
 
         :return:
@@ -87,7 +85,7 @@ class BitSkins(object):
         return self._selenium_helper
 
     @property
-    def secret(self):
+    def secret(self) -> str:
         """Getter for One Time Passwords based on the given secret
 
         :return:

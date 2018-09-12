@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-# covered by python-dotenv
-# noinspection PyPackageRequirements
 import dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, '.env')

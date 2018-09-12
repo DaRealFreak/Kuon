@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 from json.decoder import JSONDecodeError
 from typing import Type
 
@@ -13,15 +12,15 @@ from kuon.watcher.adapters import SalesAdapterBase
 from kuon.watcher.tracker import TrackConditions
 
 
-class ConditionChecker:
+class ConditionChecker(object):
     """Class for checking if the given conditions match the item"""
 
     _cache = {}
 
-    def __init__(self, adapter: Type[SalesAdapterBase], *args, **kwargs):
+    def __init__(self, adapter: Type[SalesAdapterBase], *args, **kwargs) -> None:
         """Initializing function
 
-        :param adapter:
+        :type adapter: Type[SalesAdapterBase]
         """
         self.sales_interface = adapter(*args, **kwargs)
         self.condition_mapping = {
@@ -31,20 +30,20 @@ class ConditionChecker:
         }
 
     @staticmethod
-    def _check_below_value(item: LockedDict, condition: LockedDict):
+    def _check_below_value(item: LockedDict, condition: LockedDict) -> bool:
         """Check if the value of the item is below the specified search value
 
-        :param item:
-        :param condition:
+        :type item: LockedDict
+        :type condition: LockedDict
         :return:
         """
         return item[condition.key] >= 0 and (item[condition.key] < condition.value)
 
-    def _check_below_average_last_sold(self, item: LockedDict, condition: LockedDict):
+    def _check_below_average_last_sold(self, item: LockedDict, condition: LockedDict) -> bool:
         """Check if the value of the item is below the average of the last 20 sold items
 
-        :param item:
-        :param condition:
+        :type item: LockedDict
+        :type condition: LockedDict
         :return:
         """
         last_sold = self.get_sold_history(market_name=item.market_name, no_delay=True)
@@ -55,12 +54,12 @@ class ConditionChecker:
         else:
             return item[condition.key] >= 0 and (item[condition.key] < avg_value + condition.value)
 
-    def _check_below_cheapest_last_sold(self, item: LockedDict, condition: LockedDict):
+    def _check_below_cheapest_last_sold(self, item: LockedDict, condition: LockedDict) -> bool:
         """Check if the value of the item is below the average of the cheapest sold items
         of the last 20 purchases
 
-        :param item:
-        :param condition:
+        :type item: LockedDict
+        :type condition: LockedDict
         :return:
         """
         last_sold = self.get_sold_history(market_name=item.market_name, no_delay=True)
@@ -71,11 +70,11 @@ class ConditionChecker:
         else:
             return item[condition.key] >= 0 and (item[condition.key] < lowest_value + condition.value)
 
-    def check_condition(self, item: LockedDict, settings: LockedDict):
+    def check_condition(self, item: LockedDict, settings: LockedDict) -> bool:
         """Check if the set condition matches on the passed item
 
-        :param item:
-        :param settings:
+        :type item: LockedDict
+        :type settings: LockedDict
         :return:
         """
         try:
@@ -83,11 +82,11 @@ class ConditionChecker:
         except (InvalidApiResponseType, JSONDecodeError, RequestsConnectionError, TimeoutException):
             return False
 
-    def get_sold_history(self, market_name, no_delay=False):
+    def get_sold_history(self, market_name: str, no_delay: bool = False) -> LockedDict:
         """Cache the sold history entries to execute less queries
 
-        :param market_name:
-        :param no_delay:
+        :type market_name: str
+        :type no_delay: bool
         :return:
         """
         if market_name not in self._cache:
@@ -101,7 +100,7 @@ class ConditionChecker:
             self._cache[market_name][no_delay] = last_sold
         return self._cache[market_name][no_delay]
 
-    def clear_sold_history_cache(self):
+    def clear_sold_history_cache(self) -> None:
         """Clear the sold history cache
 
         :return:

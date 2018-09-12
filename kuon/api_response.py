@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import json
 from collections import MutableSequence
 
@@ -12,7 +11,7 @@ class LockedList(MutableSequence):
     Return LockedList on list or tuple types
     and LockedDict on dict types"""
 
-    def __init__(self, data=None):
+    def __init__(self, data=None) -> None:
         """Initialize the class"""
         super(LockedList, self).__init__()
         if data is not None:
@@ -20,10 +19,10 @@ class LockedList(MutableSequence):
         else:
             self._list = list()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self._list)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._list)
 
     def __getitem__(self, ii):
@@ -34,19 +33,19 @@ class LockedList(MutableSequence):
             val = LockedDict(val)
         return val
 
-    def __delitem__(self, ii):
+    def __delitem__(self, ii) -> None:
         del self._list[ii]
 
-    def __setitem__(self, ii, val):
+    def __setitem__(self, ii, val) -> None:
         pass
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self._list)
 
-    def insert(self, ii, val):
+    def insert(self, ii, val) -> None:
         pass
 
-    def append(self, val):
+    def append(self, val) -> None:
         pass
 
 
@@ -55,7 +54,7 @@ class LockedDict(dict):
     Return LockedList on list or tuple types
     and LockedDict on dict types"""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super(LockedDict, self).__init__(*args, **kwargs)
         for arg in args:
             if isinstance(arg, dict):
@@ -74,16 +73,16 @@ class LockedDict(dict):
             val = LockedDict(val)
         return val
 
-    def __setattr__(self, key, value):
+    def __setattr__(self, key, value) -> None:
         pass
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, value) -> None:
         pass
 
-    def __delattr__(self, item):
+    def __delattr__(self, item) -> None:
         self.__delitem__(item)
 
-    def __delitem__(self, key):
+    def __delitem__(self, key) -> None:
         super(LockedDict, self).__delitem__(key)
         del self.__dict__[key]
 
@@ -92,7 +91,7 @@ class APIResponse(LockedDict):
     """Wrapper for the json response returned from the APIs of OPSkins and Bitskins
     Uses LockedDict and LockedList classes to prevent modifications to the retrieved values"""
 
-    def __init__(self, data):
+    def __init__(self, data) -> None:
         try:
             data = json.loads(data)
         except ValueError:

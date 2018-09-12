@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 from typing import List
 
 from kuon.watcher.adapters.models import AbstractEntity
@@ -11,20 +10,20 @@ class Item(AbstractEntity):
     """General Item Class"""
 
     def __init__(self, market_name: str, item_id: str, app_id: int, class_id: int, context_id: int, instance_id: int,
-                 price: int, wear_value: float, image: str, inspect_link: str, stickers: List[Sticker] = None):
+                 price: int, wear_value: float, image: str, inspect_link: str, stickers: List[Sticker] = None) -> None:
         """Initializing function
 
-        :param market_name:
-        :param item_id:
-        :param app_id:
-        :param class_id:
-        :param context_id:
-        :param instance_id:
-        :param price:
-        :param wear_value:
-        :param image:
-        :param inspect_link:
-        :param stickers:
+        :type market_name: str
+        :type item_id: str
+        :type app_id: int
+        :type class_id: int
+        :type context_id: int
+        :type instance_id: int
+        :type price: int
+        :type wear_value: float
+        :type image: str
+        :type inspect_link: str
+        :type stickers: List[Sticker]
         """
         self._market_name = market_name
         self._item_id = item_id
@@ -43,7 +42,7 @@ class Item(AbstractEntity):
             self._stickers = []
 
     @property
-    def value(self):
+    def value(self) -> dict:
         """Return all important information from the Steam API
 
         :return:
@@ -63,7 +62,7 @@ class Item(AbstractEntity):
         }
 
     @property
-    def stickers(self):
+    def stickers(self) -> list:
         """Property for stickers which returns __dict__ of the sticker objects
         to allow JSON dump the item without custom JSONEncoder objects
 
@@ -72,18 +71,18 @@ class Item(AbstractEntity):
         return [s.__dict__ for s in self._stickers]
 
     @stickers.setter
-    def stickers(self, stickers: List[Sticker]):
+    def stickers(self, stickers: List[Sticker]) -> None:
         """Setter for sticker
 
-        :param stickers:
+        :type stickers: List[Sticker]
         :return:
         """
         self._stickers = stickers
 
-    def add_sticker(self, sticker: Sticker):
+    def add_sticker(self, sticker: Sticker) -> None:
         """Adder for sticker
 
-        :param sticker:
+        :type sticker: Sticker
         :return:
         """
         if sticker not in self._stickers:

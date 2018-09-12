@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from typing import Union
 
 import requests
 
@@ -11,13 +12,13 @@ class InvalidApiSettingsException(Exception):
     pass
 
 
-class Telegram:
+class Telegram(object):
     """
     Class to notify the user via telegram bot.
     The telegram API documentation can be found here: https://core.telegram.org/bots/api
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initializing function"""
         if not Settings.Notification.Telegram.token:
             raise InvalidApiSettingsException('You need an API token to use the Telegram API')
@@ -31,7 +32,7 @@ class Telegram:
 
         self._chat_id = Settings.Notification.Telegram.chat_id
 
-    def get_me(self):
+    def get_me(self) -> APIResponse:
         """getMe implementation
         https://core.telegram.org/bots/api#getme
 
@@ -41,14 +42,15 @@ class Telegram:
         link = requests.get(api_url)
         return APIResponse(link.text)
 
-    def get_updates(self, offset=None, limit=None, timeout=None, allowed_updates=None):
+    def get_updates(self, offset: int = None, limit: int = None, timeout: int = None,
+                    allowed_updates: Union[list, tuple] = None) -> APIResponse:
         """getUpdates implementation
         https://core.telegram.org/bots/api#getupdates
 
-        :param offset:
-        :param limit:
-        :param timeout:
-        :param allowed_updates:
+        :type offset: int
+        :type limit: int
+        :type timeout: int
+        :type allowed_updates: Union[list, tuple]
         :return:
         """
         api_url = "{0:s}/getUpdates".format(self.api_url)
@@ -67,18 +69,19 @@ class Telegram:
         link = requests.get(api_url)
         return APIResponse(link.text)
 
-    def send_message(self, text, chat_id: int, parse_mode=None, disable_web_page_preview=None,
-                     disable_notification=False, reply_to_message_id=None, reply_markup=None):
+    def send_message(self, text: str, chat_id: int, parse_mode: str = None, disable_web_page_preview: bool = None,
+                     disable_notification: bool = False, reply_to_message_id: int = None,
+                     reply_markup: Union[list, tuple] = None) -> APIResponse:
         """sendMessage implementation
         https://core.telegram.org/bots/api#sendmessage
 
-        :param text:
-        :param chat_id:
-        :param parse_mode:
-        :param disable_web_page_preview:
-        :param disable_notification:
-        :param reply_to_message_id:
-        :param reply_markup:
+        :type text: str
+        :type chat_id: int
+        :type parse_mode: str
+        :type disable_web_page_preview: bool
+        :type disable_notification: bool
+        :type reply_to_message_id: int
+        :type reply_markup: Union[list, tuple]
         :return:
         """
         api_url = "{0:s}/sendMessage".format(self.api_url)
@@ -102,7 +105,7 @@ class Telegram:
         link = requests.get(api_url, params=payload)
         return APIResponse(link.text)
 
-    def get_last_chat_id_and_text(self):
+    def get_last_chat_id_and_text(self) -> [int, str]:
         """Retrieve the last message and chat id
 
         :return:

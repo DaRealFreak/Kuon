@@ -13,12 +13,12 @@ class InvalidMailSettingsException(Exception):
     pass
 
 
-class Mail:
+class Mail(object):
     """
     Class to notify the user via mail.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initializing action. Validate SMTP connection and user settings"""
         self._smtp = SMTP(host=Settings.Notification.Mail.smtp_server, port=Settings.Notification.Mail.smtp_port)
         self._smtp.ehlo()
@@ -34,15 +34,15 @@ class Mail:
         except SMTPAuthenticationError:
             raise InvalidMailSettingsException('Invalid user credentials for the SMTP server')
 
-    def __del__(self):
+    def __del__(self) -> None:
         """Destructor"""
         self._smtp.close()
 
-    def send_message(self, subject, text):
+    def send_message(self, subject: str, text: str) -> None:
         """Send a mail to the configured mail
 
-        :param subject:
-        :param text:
+        :type subject:
+        :type text:
         :return:
         """
         text = '\r\n'.join(['To: %s' % Settings.Notification.Mail.recipient_mail,

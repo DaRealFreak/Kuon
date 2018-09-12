@@ -12,12 +12,12 @@ class TrackConditions:
     BELOW_CHEAPEST_LAST_SOLD = 2
 
 
-class Tracker:
+class Tracker(object):
     """Class to track search terms with conditions"""
 
     ITEM_REQUIRED_KEYWORDS = ('search_item', 'conditions')
 
-    def __init__(self, log_level=logging.ERROR):
+    def __init__(self, log_level: int = logging.ERROR) -> None:
         """Initializing function"""
         logging.basicConfig(level=log_level,
                             format='[%(asctime)s.%(msecs)03d %(levelname)s %(name)s] %(message)s',
@@ -28,17 +28,17 @@ class Tracker:
         self._tracked_items = self._json_manager.get_tracked_items(self.ITEM_REQUIRED_KEYWORDS)
 
     @property
-    def tracked_items(self):
+    def tracked_items(self) -> LockedList:
         """Get the tracked items as LockedList
 
         :return:
         """
         return LockedList(self._tracked_items)
 
-    def add_item(self, item: LockedDict):
+    def add_item(self, item: LockedDict) -> None:
         """Adds an item to the tracking list
 
-        :param item:
+        :type item: LockedDict
         :return:
         """
         if not all([key in item for key in Tracker.ITEM_REQUIRED_KEYWORDS]):
@@ -50,10 +50,10 @@ class Tracker:
             self._tracked_items.append(item)
             self._json_manager.save_tracked_items(self._tracked_items)
 
-    def remove_item(self, item: LockedDict):
+    def remove_item(self, item: LockedDict) -> None:
         """Removes an item from the tracking list
 
-        :param item:
+        :type item: LockedDict
         :return:
         """
         if item in self._tracked_items:

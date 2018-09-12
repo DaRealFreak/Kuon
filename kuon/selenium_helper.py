@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import logging
 import os
 import sys
@@ -19,7 +18,7 @@ CHROME_OPTIONS = Options()
 class SeleniumHelper(webdriver.Chrome):
     """Headless Chrome implementation with selenium"""
 
-    def __init__(self, log_level=logging.ERROR, *args, **kwargs):
+    def __init__(self, log_level=logging.ERROR, *args, **kwargs) -> None:
         CHROME_OPTIONS.add_argument("--headless")
         super().__init__(executable_path=CHROMEDRIVER_PATH, chrome_options=CHROME_OPTIONS, *args, **kwargs)
         logging.basicConfig(level=log_level,

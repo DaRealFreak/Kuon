@@ -13,18 +13,22 @@ class IInventory(BitSkins):
             The Steam AppID of the game which owns this item (e.g. 730 for CS:GO, 440 for TF2, 570 for Dota 2)
     """
 
-    def __init__(self, *args, **kwargs):
-        """Initializing function"""
+    def __init__(self, *args, **kwargs) -> None:
+        """Initializing function
+
+        :type args: list
+        :type kwargs: dict
+        """
         super().__init__(*args, **kwargs)
 
-    def get_my_inventory(self, app_id=CommonSteamGames.APP_ID_CSGO, page=None) -> APIResponse:
+    def get_my_inventory(self, app_id: int = CommonSteamGames.APP_ID_CSGO, page: int = None) -> APIResponse:
         """GetAccountInventory v1 implementation
         https://bitskins.com/api/#get_my_inventory
 
         Returns the newest 5000 items, use pages to navigate through more
 
-        :param app_id:
-        :param page:
+        :type app_id: int
+        :type page: int
         :return:
         """
         api_url = "https://bitskins.com/api/v1/get_my_inventory/"

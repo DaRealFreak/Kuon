@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import json
 
 from kuon.api_response import APIResponse
@@ -9,14 +8,14 @@ from kuon.watcher.adapters.models.search_response import SearchResponse
 from kuon.watcher.adapters.models.sticker import Sticker
 
 
-class SearchResponseParser:
+class SearchResponseParser(object):
     """Parser class to parse the response of the search to the unified format"""
 
     @staticmethod
-    def parse(results):
+    def parse(results: dict) -> APIResponse:
         """Parse the item model
 
-        :param results:
+        :type results: dict
         :return:
         """
         success = results['status'] == 'success' and 'items' in results['data']
@@ -45,10 +44,10 @@ class SearchResponseParser:
         return APIResponse(json.dumps(response.__dict__))
 
     @staticmethod
-    def get_stickers(stickers):
+    def get_stickers(stickers: list) -> list:
         """Parse the sticker value
 
-        :param stickers:
+        :type stickers: list
         :return:
         """
         if not stickers:

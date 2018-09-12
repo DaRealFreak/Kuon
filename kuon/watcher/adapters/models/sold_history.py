@@ -10,11 +10,11 @@ from kuon.watcher.adapters.models.sold_item import SoldItem
 class SoldHistory(AbstractEntity):
     """General Sold History Response from the APIs"""
 
-    def __init__(self, success: bool, sold_items: List[SoldItem] = None):
+    def __init__(self, success: bool, sold_items: List[SoldItem] = None) -> None:
         """Initializing function
 
-        :param success:
-        :param sold_items:
+        :type success: bool
+        :type sold_items: List[SoldItem]
         """
         self._success = success
 
@@ -24,7 +24,7 @@ class SoldHistory(AbstractEntity):
             self._sold_items = []
 
     @property
-    def value(self):
+    def value(self) -> dict:
         """Return all important information from the API response like success and sold items
 
         :return:
@@ -37,7 +37,7 @@ class SoldHistory(AbstractEntity):
         }
 
     @property
-    def sold_items(self):
+    def sold_items(self) -> list:
         """Property for sold items which returns __dict__ of the sold item objects
         to allow JSON dump the search response without custom JSONEncoder objects
 
@@ -46,18 +46,18 @@ class SoldHistory(AbstractEntity):
         return [i.__dict__ for i in self._sold_items]
 
     @sold_items.setter
-    def sold_items(self, sold_items: List[SoldItem]):
+    def sold_items(self, sold_items: List[SoldItem]) -> None:
         """Setter for sold items
 
-        :param sold_items:
+        :type sold_items: List[SoldItem]
         :return:
         """
         self._sold_items = sold_items
 
-    def add_sale(self, sold_item: SoldItem):
+    def add_sale(self, sold_item: SoldItem) -> None:
         """Adder for sold items
 
-        :param sold_item:
+        :type sold_item: SoldItem
         :return:
         """
         if sold_item not in self._sold_items:

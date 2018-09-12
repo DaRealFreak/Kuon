@@ -7,8 +7,12 @@ from kuon.bitskins import BitSkins
 class IUser(BitSkins):
     """Implementation of the API methods related to the user on BitSkins"""
 
-    def __init__(self, *args, **kwargs):
-        """Initializing function"""
+    def __init__(self, *args, **kwargs) -> None:
+        """Initializing function
+
+        :type args: list
+        :type kwargs: dict
+        """
         super().__init__(*args, **kwargs)
 
     def get_account_balance(self) -> APIResponse:
