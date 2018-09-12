@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import logging
 import threading
 from json.decoder import JSONDecodeError
@@ -30,10 +29,13 @@ class Watcher(threading.Thread):
     _mail = None
     _telegram = None
 
-    def __init__(self, adapter: Type[SalesAdapterBase], log_level=logging.ERROR, *args, **kwargs):
+    def __init__(self, adapter: Type[SalesAdapterBase], log_level: int = logging.ERROR, *args, **kwargs) -> None:
         """Initializing function
 
-        :param log_level:
+        :type adapter: Type[SalesAdapterBase]
+        :type log_level: int
+        :type args: list
+        :type kwargs: dict
         """
         # initialize logger
         logging.basicConfig(level=log_level,
@@ -49,7 +51,7 @@ class Watcher(threading.Thread):
         self.validate_settings()
         super().__init__(target=self.run)
 
-    def run(self):
+    def run(self) -> None:
         """The main function, checking the tracked items in a while True loop
 
         :return:
@@ -72,7 +74,7 @@ class Watcher(threading.Thread):
 
                     if (track_index, search_item.item_id) in self.checked_ids:
                         # continue on items we checked already
-                        self.logger.debug("already notified user about item: {item}".format(item=search_item.item_id))
+                        self.logger.debug("already checked item: {item}".format(item=search_item.item_id))
                         continue
 
                     if self.condition_checker.check_condition(item=search_item, settings=tracked_item):
@@ -94,10 +96,10 @@ class Watcher(threading.Thread):
                 self.logger.info("sleeping '{:.2f}' seconds".format(Settings.check_frequency - duration))
                 sleep(Settings.check_frequency - duration)
 
-    def notify_user(self, item: LockedDict):
+    def notify_user(self, item: LockedDict) -> bool:
         """Notifying the user with the selected option
 
-        :param item:
+        :type item: LockedDict
         :return:
         """
         if item.item_id in self.checked_ids:
@@ -121,7 +123,7 @@ class Watcher(threading.Thread):
 
             raise NotImplementedError("Mail notification is not implemented yet")
 
-    def validate_settings(self):
+    def validate_settings(self) -> None:
         """Validate the settings and overwrite the invalid settings
 
         :return:
@@ -131,14 +133,14 @@ class Watcher(threading.Thread):
             Settings.check_frequency = 60 / Settings.LIMIT_60_SECONDS
 
     @property
-    def mail(self):
+    def mail(self) -> Mail:
         """Property for Mail class to only initialize it on usage"""
         if not self._mail:
             self._mail = Mail()
         return self._mail
 
     @property
-    def telegram(self):
+    def telegram(self) -> Telegram:
         """Property for Telegram class to only initialize it on usage"""
         if not self._telegram:
             self._telegram = Telegram()
