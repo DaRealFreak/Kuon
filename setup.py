@@ -24,7 +24,8 @@ setup(name=about['__title__'],
           'selenium>=3.8.1',
           'bs4>=0.0.1',
           'html5lib>=1.0.1',
-          'pyotp>=2.2.6'
+          'pyotp>=2.2.6',
+          'rsa>=3.4.2'
       ],
       extras_require={
       },
